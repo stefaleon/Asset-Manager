@@ -15,8 +15,13 @@ app.get('/', (req, res) => {
 });
 
 app.post('/api/categories', async (req, res) => {
-  const category = await new Category(req.body).save();
-  res.status(200).json({ data: category });
+  try {
+    const category = await new Category(req.body).save();
+    res.status(200).json({ data: category });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Server Error' });
+  }
 });
 
 const listen = async () => {
