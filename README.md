@@ -4,5 +4,5 @@
 
 ```
 PORT=5000
-DB=mongodb+srv://USERNAME:PASSWORD@cluster0.pphyl.mongodb.net/DB_NAME?retryWrites=true&w=majority
+DB=YOUR_ATLAS_CONNECTION_STRING
 ```

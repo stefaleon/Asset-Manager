@@ -8,14 +8,20 @@ app.get('/', (req, res) => {
   res.send('This is the Asset Manager API');
 });
 
-try {
-  mongoose.connect(process.env.DB, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
-} catch (error) {
-  console.log(error);
-}
+const connect = async () => {
+  try {
+    await mongoose.connect(process.env.DB, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    const conn = mongoose.connection;
+    console.log(`Connected to the "${conn.name}" database`);
+  } catch (error) {
+    console.log('Error on db connection - Code:', error.code);
+  }
+};
+
+connect();
 
 app.listen(process.env.PORT, () => {
   console.log(`Server running on port ${process.env.PORT}`);
