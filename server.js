@@ -1,13 +1,22 @@
 const express = require('express');
 
+const Category = require('./models/category');
+
 const connect = require('./connect');
 
 require('dotenv').config();
 
 const app = express();
 
+app.use(express.json());
+
 app.get('/', (req, res) => {
   res.send('This is the Asset Manager API');
+});
+
+app.post('/api/categories', async (req, res) => {
+  const category = await new Category(req.body).save();
+  res.status(200).json({ data: category });
 });
 
 const listen = async () => {
