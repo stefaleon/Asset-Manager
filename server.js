@@ -15,14 +15,20 @@ const connect = async () => {
       useUnifiedTopology: true,
     });
     const conn = mongoose.connection;
-    console.log(`Connected to the "${conn.name}" database`);
+    console.log(`Connected to the "${conn.name}"  database`);
+    return conn;
   } catch (error) {
     console.log('Error on db connection - Code:', error.code);
   }
 };
 
-connect();
+const listen = async () => {
+  const conn = await connect();
+  if (conn) {
+    app.listen(process.env.PORT, () => {
+      console.log(`Server running on port ${process.env.PORT}`);
+    });
+  }
+};
 
-app.listen(process.env.PORT, () => {
-  console.log(`Server running on port ${process.env.PORT}`);
-});
+listen();
