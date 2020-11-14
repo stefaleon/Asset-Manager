@@ -1,24 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
-const Category = require('../models/category');
+const categoriesController = require('../controllers/categories');
 
-router.post('/', async (req, res, next) => {
-  try {
-    const category = await new Category(req.body).save();
-    res.status(200).json({ data: category });
-  } catch (err) {
-    next(err);
-  }
-});
+router.post('/', categoriesController.createCategory);
 
-router.get('/', async (req, res, next) => {
-  try {
-    const categories = await Category.find();
-    res.status(200).json({ data: categories });
-  } catch (err) {
-    next(err);
-  }
-});
+router.get('/', categoriesController.readCategories);
 
 module.exports = router;
