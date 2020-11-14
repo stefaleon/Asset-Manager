@@ -1,10 +1,10 @@
 const express = require('express');
 
-const Category = require('./models/category');
-
 const connect = require('./connect');
 
 require('dotenv').config();
+
+const categoriesRoutes = require('./routes/categories');
 
 const app = express();
 
@@ -14,23 +14,7 @@ app.get('/', (req, res) => {
   res.send('This is the Asset Manager API');
 });
 
-app.post('/api/categories', async (req, res, next) => {
-  try {
-    const category = await new Category(req.body).save();
-    res.status(200).json({ data: category });
-  } catch (err) {
-    next(err);
-  }
-});
-
-app.get('/api/categories', async (req, res, next) => {
-  try {
-    const categories = await Category.find();
-    res.status(200).json({ data: categories });
-  } catch (err) {
-    next(err);
-  }
-});
+app.use('/api/categories', categoriesRoutes);
 
 app.use((err, req, res, next) => {
   console.error(err.message);
