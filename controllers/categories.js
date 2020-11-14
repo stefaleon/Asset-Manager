@@ -11,7 +11,7 @@ exports.createCategory = async (req, res, next) => {
 
 exports.readCategories = async (req, res, next) => {
   try {
-    const categories = await Category.find();
+    const categories = await Category.find().sort('name');
     res.status(200).json({ data: categories });
   } catch (err) {
     next(err);
