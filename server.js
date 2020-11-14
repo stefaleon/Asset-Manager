@@ -23,6 +23,15 @@ app.post('/api/categories', async (req, res, next) => {
   }
 });
 
+app.get('/api/categories', async (req, res, next) => {
+  try {
+    const categories = await Category.find();
+    res.status(200).json({ data: categories });
+  } catch (err) {
+    next(err);
+  }
+});
+
 app.use((err, req, res, next) => {
   console.error(err.message);
   res.status(500).json({ error: 'Server Error' });
