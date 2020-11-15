@@ -5,6 +5,7 @@ const connect = require('./connect');
 require('dotenv').config();
 
 const categoriesRoutes = require('./routes/categories');
+const locationsRoutes = require('./routes/locations');
 
 const app = express();
 
@@ -15,6 +16,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/categories', categoriesRoutes);
+app.use('/api/locations', locationsRoutes);
 
 app.use((err, req, res, next) => {
   console.error(err.message);
