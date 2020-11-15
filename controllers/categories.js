@@ -22,7 +22,7 @@ exports.readCategory = async (req, res, next) => {
   try {
     const category = await Category.findById(req.params.id);
     if (!category) {
-      res.status(404).json({ error: 'Category not found' });
+      return res.status(404).json({ error: 'Category not found' });
     }
     res.status(200).json({ data: category });
   } catch (err) {
