@@ -9,4 +9,6 @@ router.get('/', categoriesController.readCategories);
 
 router.get('/:id', categoriesController.readCategory);
 
+router.patch('/:id', categoriesController.updateCategory);
+
 module.exports = router;
