@@ -1,4 +1,5 @@
 const Category = require('../models/category');
+const Asset = require('../models/asset');
 
 exports.createCategory = async (req, res, next) => {
   try {
@@ -45,11 +46,17 @@ exports.updateCategory = async (req, res, next) => {
 
 exports.deleteCategory = async (req, res, next) => {
   try {
-    const category = await Category.findById(req.params.id);
-    if (!category) {
+    const cat = await Category.findById(req.params.id);
+    if (!cat) {
       return res.status(404).json({ error: 'Category not found' });
     }
-    const deleted = await category.remove();
+    const assets = await Asset.find({ category: cat._id });
+    if (assets.length > 0) {
+      return res
+        .status(403)
+        .json({ error: 'Forbidden: Category is used in Asset documents' });
+    }
+    const deleted = await cat.remove();
     res.status(200).json({ data: deleted });
   } catch (err) {
     next(err);

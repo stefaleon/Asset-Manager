@@ -22,7 +22,9 @@ app.use('/api/assets', assetsRoutes);
 
 app.use((err, req, res, next) => {
   console.error(err.message);
-  res.status(500).json({ error: 'Server Error' });
+  res
+    .status(500)
+    .json({ error: 'Server Error', code: err.code, message: err.message });
 });
 
 const listen = async () => {

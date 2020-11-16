@@ -1,4 +1,5 @@
 const Location = require('../models/location');
+const Asset = require('../models/asset');
 
 exports.createLocation = async (req, res, next) => {
   try {
@@ -45,11 +46,17 @@ exports.updateLocation = async (req, res, next) => {
 
 exports.deleteLocation = async (req, res, next) => {
   try {
-    const location = await Location.findById(req.params.id);
-    if (!location) {
+    const loc = await Location.findById(req.params.id);
+    if (!loc) {
       return res.status(404).json({ error: 'Location not found' });
     }
-    const deleted = await location.remove();
+    const assets = await Asset.find({ location: loc._id });
+    if (assets.length > 0) {
+      return res
+        .status(403)
+        .json({ error: 'Forbidden: Location is used in Asset documents' });
+    }
+    const deleted = await loc.remove();
     res.status(200).json({ data: deleted });
   } catch (err) {
     next(err);
