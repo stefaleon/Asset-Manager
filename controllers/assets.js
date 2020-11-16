@@ -25,8 +25,18 @@ exports.readAssets = async (req, res, next) => {
       { path: 'category', select: ['name', 'description'] },
       { path: 'location', select: ['name', 'description'] },
     ];
-    const assets = await Asset.find().populate(populateQuery).sort('name');
-    res.status(200).json({ data: assets });
+    const searchQuery = req.query.search
+      ? {
+          $or: [
+            { name: { $regex: req.query.search, $options: 'i' } },
+            { description: { $regex: req.query.search, $options: 'i' } },
+          ],
+        }
+      : {};
+    const assets = await Asset.find(searchQuery)
+      .populate(populateQuery)
+      .sort('name');
+    res.status(200).json({ count: assets.length, data: assets });
   } catch (err) {
     next(err);
   }
