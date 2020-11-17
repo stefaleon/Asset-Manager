@@ -3,6 +3,7 @@ const Category = require('../models/category');
 const Location = require('../models/location');
 
 const defineSearchQuery = require('../utils/define-search-query');
+const calculatePaginationValues = require('../utils/calculate-pagination-values');
 
 exports.createAsset = async (req, res, next) => {
   try {
@@ -28,10 +29,27 @@ exports.readAssets = async (req, res, next) => {
       { path: 'location', select: ['name', 'description'] },
     ];
     const searchQuery = defineSearchQuery(req);
+    const pagination = calculatePaginationValues(req);
+    const allAssetsCount = await Asset.estimatedDocumentCount();
+    const filteredAssetsCount = searchQuery
+      ? (await Asset.find(searchQuery)).length
+      : allAssetsCount;
     const assets = await Asset.find(searchQuery)
+      .skip(pagination.startIndex)
+      .limit(pagination.limit)
       .populate(populateQuery)
       .sort('name');
-    res.status(200).json({ count: assets.length, data: assets });
+    res.status(200).json({
+      all: allAssetsCount,
+      filtered: filteredAssetsCount,
+      count: assets.length,
+      page: pagination.page,
+      limit: pagination.limit,
+      previous: pagination.previous,
+      next:
+        pagination.nextPageIndex < filteredAssetsCount ? pagination.next : null,
+      data: assets,
+    });
   } catch (err) {
     next(err);
   }
