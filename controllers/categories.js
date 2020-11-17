@@ -1,6 +1,8 @@
 const Category = require('../models/category');
 const Asset = require('../models/asset');
 
+const defineSearchQuery = require('../utils/define-search-query');
+
 exports.createCategory = async (req, res, next) => {
   try {
     const category = await new Category(req.body).save();
@@ -12,7 +14,8 @@ exports.createCategory = async (req, res, next) => {
 
 exports.readCategories = async (req, res, next) => {
   try {
-    const categories = await Category.find().sort('name');
+    const searchQuery = defineSearchQuery(req);
+    const categories = await Category.find(searchQuery).sort('name');
     res.status(200).json({ data: categories });
   } catch (err) {
     next(err);

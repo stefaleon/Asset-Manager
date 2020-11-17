@@ -1,6 +1,8 @@
 const Location = require('../models/location');
 const Asset = require('../models/asset');
 
+const defineSearchQuery = require('../utils/define-search-query');
+
 exports.createLocation = async (req, res, next) => {
   try {
     const location = await new Location(req.body).save();
@@ -12,7 +14,8 @@ exports.createLocation = async (req, res, next) => {
 
 exports.readLocations = async (req, res, next) => {
   try {
-    const locations = await Location.find().sort('name');
+    const searchQuery = defineSearchQuery(req);
+    const locations = await Location.find(searchQuery).sort('name');
     res.status(200).json({ data: locations });
   } catch (err) {
     next(err);

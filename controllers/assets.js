@@ -2,6 +2,8 @@ const Asset = require('../models/asset');
 const Category = require('../models/category');
 const Location = require('../models/location');
 
+const defineSearchQuery = require('../utils/define-search-query');
+
 exports.createAsset = async (req, res, next) => {
   try {
     const category = await Category.findById(req.body.category);
@@ -25,14 +27,7 @@ exports.readAssets = async (req, res, next) => {
       { path: 'category', select: ['name', 'description'] },
       { path: 'location', select: ['name', 'description'] },
     ];
-    const searchQuery = req.query.search
-      ? {
-          $or: [
-            { name: { $regex: req.query.search, $options: 'i' } },
-            { description: { $regex: req.query.search, $options: 'i' } },
-          ],
-        }
-      : {};
+    const searchQuery = defineSearchQuery(req);
     const assets = await Asset.find(searchQuery)
       .populate(populateQuery)
       .sort('name');
