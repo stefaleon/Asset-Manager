@@ -20,7 +20,7 @@ function App() {
           <Route exact path='/'>
             <Tabs defaultActiveKey='assets' id='tabs'>
               <Tab eventKey='assets' title='Assets'>
-                <Assets />
+                <Assets assets={[]} />
               </Tab>
               <Tab eventKey='by-category' title='ByCategory'>
                 <ByCategory />
