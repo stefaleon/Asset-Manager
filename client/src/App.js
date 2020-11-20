@@ -16,6 +16,7 @@ import ByLocation from './components/ByLocation';
 function App() {
   const [assets, setAssets] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const fetchAssets = async () => {
     try {
@@ -26,7 +27,12 @@ function App() {
     } catch (error) {
       console.log(error);
       setLoading(false);
+      setError(error);
     }
+  };
+
+  const refreshAfterError = () => {
+    setError(null);
   };
 
   useEffect(() => {
@@ -42,7 +48,12 @@ function App() {
           <Route exact path='/'>
             <Tabs defaultActiveKey='assets' id='tabs'>
               <Tab eventKey='assets' title='Assets'>
-                <Assets assets={assets} loading={loading} />
+                <Assets
+                  assets={assets}
+                  loading={loading}
+                  error={error}
+                  refreshAfterError={refreshAfterError}
+                />
               </Tab>
               <Tab eventKey='by-category' title='ByCategory'>
                 <ByCategory />

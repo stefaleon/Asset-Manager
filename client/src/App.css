@@ -27,3 +27,7 @@
   width: 5rem;
   height: 5rem;
 }
+
+.refresh {
+  cursor: pointer;
+}

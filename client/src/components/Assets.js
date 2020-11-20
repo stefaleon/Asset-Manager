@@ -1,12 +1,21 @@
-import { Table } from 'react-bootstrap';
+import { Table, Alert } from 'react-bootstrap';
 
 import Loading from './Loading';
 
-const Assets = ({ assets, loading }) => {
+const Assets = ({ assets, loading, error, refreshAfterError }) => {
+  const onRefreshHandler = () => {
+    refreshAfterError();
+  };
+
   return (
     <>
       {loading ? (
         <Loading />
+      ) : error ? (
+        <Alert variant='danger' className='refresh' onClick={onRefreshHandler}>
+          {error.message ? error.message : 'An Error Occured'} - Click to
+          refresh
+        </Alert>
       ) : (
         <Table responsive>
           <thead>
