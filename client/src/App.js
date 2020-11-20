@@ -1,8 +1,11 @@
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Container, Tabs, Tab } from 'react-bootstrap';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
-import { Container, Tabs, Tab } from 'react-bootstrap';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import NavigationBar from './components/NavigationBar';
 import NotFound from './components/NotFound';
 import About from './components/About';
@@ -11,6 +14,21 @@ import ByCategory from './components/ByCategory';
 import ByLocation from './components/ByLocation';
 
 function App() {
+  const [assets, setAssets] = useState([]);
+
+  const fetchAssets = async () => {
+    try {
+      const res = await axios.get('localhost:5000/api/assets');
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchAssets();
+  });
+
   return (
     <BrowserRouter>
       <Container>
