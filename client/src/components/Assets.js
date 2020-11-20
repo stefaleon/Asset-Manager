@@ -24,8 +24,8 @@ const Assets = ({ assets }) => {
                 <td>{index + 1}</td>
                 <td>{asset.name}</td>
                 <td>{asset.description}</td>
-                <td>{asset.category.name}</td>
-                <td>{asset.location.name}</td>
+                <td>{asset.category?.name}</td>
+                <td>{asset.location?.name}</td>
               </tr>
             );
           })

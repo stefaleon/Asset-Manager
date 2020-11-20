@@ -18,8 +18,9 @@ function App() {
 
   const fetchAssets = async () => {
     try {
-      const res = await axios.get('localhost:5000/api/assets');
-      console.log(res);
+      const res = await axios.get('/api/assets');
+      console.log(res.data.data);
+      setAssets(res.data.data);
     } catch (error) {
       console.log(error);
     }
@@ -27,7 +28,7 @@ function App() {
 
   useEffect(() => {
     fetchAssets();
-  });
+  }, []);
 
   return (
     <BrowserRouter>
@@ -38,7 +39,7 @@ function App() {
           <Route exact path='/'>
             <Tabs defaultActiveKey='assets' id='tabs'>
               <Tab eventKey='assets' title='Assets'>
-                <Assets assets={[]} />
+                <Assets assets={assets} />
               </Tab>
               <Tab eventKey='by-category' title='ByCategory'>
                 <ByCategory />
