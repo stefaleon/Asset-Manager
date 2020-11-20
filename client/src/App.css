@@ -20,3 +20,10 @@
 .navbar-dark .navbar-nav .show > .nav-link:hover {
   color: rgba(255, 255, 255, 1);
 }
+
+.spinner-border {
+  margin: 20px auto;
+  display: block;
+  width: 5rem;
+  height: 5rem;
+}

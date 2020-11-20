@@ -15,14 +15,17 @@ import ByLocation from './components/ByLocation';
 
 function App() {
   const [assets, setAssets] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const fetchAssets = async () => {
     try {
       const res = await axios.get('/api/assets');
       console.log(res.data.data);
       setAssets(res.data.data);
+      setLoading(false);
     } catch (error) {
       console.log(error);
+      setLoading(false);
     }
   };
 
@@ -39,7 +42,7 @@ function App() {
           <Route exact path='/'>
             <Tabs defaultActiveKey='assets' id='tabs'>
               <Tab eventKey='assets' title='Assets'>
-                <Assets assets={assets} />
+                <Assets assets={assets} loading={loading} />
               </Tab>
               <Tab eventKey='by-category' title='ByCategory'>
                 <ByCategory />
