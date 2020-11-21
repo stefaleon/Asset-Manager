@@ -17,12 +17,26 @@ function App() {
   const [assets, setAssets] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [categories, setCategories] = useState([]);
 
   const fetchAssets = async () => {
     try {
       const res = await axios.get('/api/assets');
-      console.log(res.data.data);
+      console.log('in fetchAssets - res,data.data is:', res.data.data);
       setAssets(res.data.data);
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+      setError(error);
+    }
+  };
+
+  const fetchCategories = async () => {
+    try {
+      const res = await axios.get('/api/categories');
+      console.log('in fetchCategories - res,data.data is:', res.data.data);
+      setCategories(res.data.data);
       setLoading(false);
     } catch (error) {
       console.log(error);
@@ -37,6 +51,7 @@ function App() {
 
   useEffect(() => {
     fetchAssets();
+    fetchCategories();
   }, []);
 
   return (
@@ -56,7 +71,12 @@ function App() {
                 />
               </Tab>
               <Tab eventKey='by-category' title='ByCategory'>
-                <ByCategory />
+                <ByCategory
+                  assets={assets}
+                  categories={categories}
+                  loading={loading}
+                  error={error}
+                />
               </Tab>
               <Tab eventKey='by-location' title='ByLocation'>
                 <ByLocation />
