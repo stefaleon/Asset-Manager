@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useReducer, useEffect } from 'react';
 import axios from 'axios';
 import { Container, Tabs, Tab } from 'react-bootstrap';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
@@ -13,45 +13,70 @@ import Assets from './components/Assets';
 import ByCategory from './components/ByCategory';
 import ByLocation from './components/ByLocation';
 
-function App() {
-  const [assets, setAssets] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [categories, setCategories] = useState([]);
+const fetchAssets = async (dispatch) => {
+  try {
+    dispatch({ type: 'fetch-assets-request', loading: true });
+    const { data } = await axios.get('/api/assets');
+    console.log('in fetchAssets - data.data is:', data.data);
+    dispatch({ type: 'fetch-assets-ok', assets: data.data, loading: false });
+  } catch (error) {
+    console.log(error);
+    dispatch({ type: 'fetch-assets-fail', loading: false, error });
+  }
+};
 
-  const fetchAssets = async () => {
-    try {
-      const res = await axios.get('/api/assets');
-      console.log('in fetchAssets - res,data.data is:', res.data.data);
-      setAssets(res.data.data);
-      setLoading(false);
-    } catch (error) {
-      console.log(error);
-      setLoading(false);
-      setError(error);
-    }
-  };
+const fetchCategories = async (dispatch) => {
+  try {
+    dispatch({ type: 'fetch-categories-request', loading: true });
+    const { data } = await axios.get('/api/categories');
+    console.log('in fetchCategories - data.data is:', data.data);
+    dispatch({
+      type: 'fetch-categories-ok',
+      categories: data.data,
+      loading: false,
+    });
+  } catch (error) {
+    console.log(error);
+    dispatch({ type: 'fetch-categories-fail', loading: false, error });
+  }
+};
 
-  const fetchCategories = async () => {
-    try {
-      const res = await axios.get('/api/categories');
-      console.log('in fetchCategories - res,data.data is:', res.data.data);
-      setCategories(res.data.data);
-      setLoading(false);
-    } catch (error) {
-      console.log(error);
-      setLoading(false);
-      setError(error);
-    }
-  };
+const refreshAfterError = (dispatch) => {
+  dispatch({ type: 'refresh-after-error', error: null });
+};
 
-  const refreshAfterError = () => {
-    setError(null);
-  };
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'fetch-assets-request':
+    case 'fetch-categories-request':
+      return { ...state, loading: action.loading };
+    case 'fetch-assets-ok':
+      return { ...state, assets: action.assets, loading: action.loading };
+    case 'fetch-categories-ok':
+      return {
+        ...state,
+        categories: action.categories,
+        loading: action.loading,
+      };
+    case 'fetch-assets-fail':
+    case 'fetch-categories-fail':
+      return { ...state, loading: action.loading, error: action.error };
+    default:
+      return state;
+  }
+};
+
+const App = () => {
+  const [state, dispatch] = useReducer(reducer, {
+    assets: [],
+    loading: true,
+    error: null,
+    categories: [],
+  });
 
   useEffect(() => {
-    fetchAssets();
-    fetchCategories();
+    fetchAssets(dispatch);
+    fetchCategories(dispatch);
   }, []);
 
   return (
@@ -64,18 +89,19 @@ function App() {
             <Tabs defaultActiveKey='assets' id='tabs'>
               <Tab eventKey='assets' title='Assets'>
                 <Assets
-                  assets={assets}
-                  loading={loading}
-                  error={error}
+                  assets={state.assets}
+                  loading={state.loading}
+                  error={state.error}
+                  dispatch={dispatch}
                   refreshAfterError={refreshAfterError}
                 />
               </Tab>
               <Tab eventKey='by-category' title='ByCategory'>
                 <ByCategory
-                  assets={assets}
-                  categories={categories}
-                  loading={loading}
-                  error={error}
+                  assets={state.assets}
+                  categories={state.categories}
+                  loading={state.loading}
+                  error={state.error}
                 />
               </Tab>
               <Tab eventKey='by-location' title='ByLocation'>
@@ -88,6 +114,6 @@ function App() {
       </Container>
     </BrowserRouter>
   );
-}
+};
 
 export default App;

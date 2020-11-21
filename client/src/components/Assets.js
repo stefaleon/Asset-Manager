@@ -2,9 +2,9 @@ import { Table, Alert } from 'react-bootstrap';
 
 import Loading from './Loading';
 
-const Assets = ({ assets, loading, error, refreshAfterError }) => {
+const Assets = ({ dispatch, assets, loading, error, refreshAfterError }) => {
   const onRefreshHandler = () => {
-    refreshAfterError();
+    refreshAfterError(dispatch);
   };
 
   return (
