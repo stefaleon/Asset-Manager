@@ -31,3 +31,11 @@
 .refresh {
   cursor: pointer;
 }
+
+@media (max-width: 321px) {
+  #tabs-tab-assets,
+  #tabs-tab-by-category,
+  #tabs-tab-by-location {
+    max-width: 105px;
+  }
+}
