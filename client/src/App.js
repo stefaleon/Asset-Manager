@@ -17,20 +17,23 @@ import ByLocation from './components/ByLocation';
 import {
   fetchAssets,
   fetchCategories,
+  fetchLocations,
   refreshAfterError,
 } from './methods/methods';
 
 const App = () => {
   const [state, dispatch] = useReducer(reducer, {
     assets: [],
+    categories: [],
+    locations: [],
     loading: true,
     error: null,
-    categories: [],
   });
 
   useEffect(() => {
     fetchAssets(dispatch);
     fetchCategories(dispatch);
+    fetchLocations(dispatch);
   }, []);
 
   return (

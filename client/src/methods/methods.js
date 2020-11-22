@@ -28,6 +28,22 @@ export const fetchCategories = async (dispatch) => {
   }
 };
 
+export const fetchLocations = async (dispatch) => {
+  try {
+    dispatch({ type: 'fetch-loacations-request', loading: true });
+    const { data } = await axios.get('/api/locations');
+    console.log('in fetchLocations - data.data is:', data.data);
+    dispatch({
+      type: 'fetch-locations-ok',
+      locations: data.data,
+      loading: false,
+    });
+  } catch (error) {
+    console.log(error);
+    dispatch({ type: 'fetch-locations-fail', loading: false, error });
+  }
+};
+
 export const refreshAfterError = (dispatch) => {
   dispatch({ type: 'refresh-after-error', error: null });
 };
