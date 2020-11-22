@@ -13,6 +13,7 @@ import About from './components/About';
 import Assets from './components/Assets';
 import ByCategory from './components/ByCategory';
 import ByLocation from './components/ByLocation';
+import Search from './components/Search';
 
 import {
   fetchAssets,
@@ -28,6 +29,7 @@ const App = () => {
     locations: [],
     loading: true,
     error: null,
+    searchTerm: '',
   });
 
   useEffect(() => {
@@ -45,6 +47,7 @@ const App = () => {
           <Route exact path='/'>
             <Tabs defaultActiveKey='assets' id='tabs'>
               <Tab eventKey='assets' title='Assets'>
+                <Search searchTerm={state.searchTerm} />
                 <Assets
                   assets={state.assets}
                   loading={state.loading}
