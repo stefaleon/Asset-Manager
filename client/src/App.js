@@ -62,7 +62,12 @@ const App = () => {
                 />
               </Tab>
               <Tab eventKey='by-location' title='ByLocation'>
-                <ByLocation />
+                <ByLocation
+                  assets={state.assets}
+                  locations={state.locations}
+                  loading={state.loading}
+                  error={state.error}
+                />
               </Tab>
             </Tabs>
           </Route>
