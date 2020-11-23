@@ -1,16 +1,21 @@
 import { useState } from 'react';
 import { Form, InputGroup, Jumbotron, Button } from 'react-bootstrap';
 
-const Search = ({ searchTerm }) => {
+const Search = ({ searchTerm, dispatch, changeSearchTerm }) => {
   const [search, setSearch] = useState({ term: searchTerm });
 
   const onChange = (e) => {
     setSearch({ ...search, [e.target.name]: e.target.value });
   };
 
+  const onSubmit = (e) => {
+    e.preventDefault();
+    changeSearchTerm(dispatch, search.term.trim());
+  };
+
   return (
     <Jumbotron>
-      <Form inline>
+      <Form inline onSubmit={onSubmit}>
         <InputGroup>
           <InputGroup.Prepend>
             <InputGroup.Text>

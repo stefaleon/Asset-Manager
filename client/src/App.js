@@ -21,6 +21,7 @@ import {
   fetchLocations,
   refreshAfterError,
   fetchFilteredAssets,
+  changeSearchTerm,
 } from './methods/methods';
 
 const App = () => {
@@ -53,7 +54,11 @@ const App = () => {
           <Route exact path='/'>
             <Tabs defaultActiveKey='assets' id='tabs'>
               <Tab eventKey='assets' title='Assets'>
-                <Search searchTerm={state.searchTerm} />
+                <Search
+                  searchTerm={state.searchTerm}
+                  dispatch={dispatch}
+                  changeSearchTerm={changeSearchTerm}
+                />
                 <Assets
                   assets={state.filteredAssets}
                   loading={state.loading}

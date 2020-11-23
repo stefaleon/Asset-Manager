@@ -1,5 +1,9 @@
 import axios from 'axios';
 
+export const changeSearchTerm = (dispatch, term) => {
+  dispatch({ type: 'change-search-term', searchTerm: term });
+};
+
 export const fetchAssets = async (dispatch) => {
   try {
     dispatch({ type: 'fetch-assets-request', loading: true });
