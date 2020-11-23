@@ -20,6 +20,7 @@ import {
   fetchCategories,
   fetchLocations,
   refreshAfterError,
+  fetchFilteredAssets,
 } from './methods/methods';
 
 const App = () => {
@@ -30,6 +31,7 @@ const App = () => {
     loading: true,
     error: null,
     searchTerm: '',
+    filteredAssets: [],
   });
 
   useEffect(() => {
@@ -37,6 +39,10 @@ const App = () => {
     fetchCategories(dispatch);
     fetchLocations(dispatch);
   }, []);
+
+  useEffect(() => {
+    fetchFilteredAssets(dispatch, state.searchTerm);
+  }, [state.searchTerm]);
 
   return (
     <BrowserRouter>
@@ -49,7 +55,7 @@ const App = () => {
               <Tab eventKey='assets' title='Assets'>
                 <Search searchTerm={state.searchTerm} />
                 <Assets
-                  assets={state.assets}
+                  assets={state.filteredAssets}
                   loading={state.loading}
                   error={state.error}
                   dispatch={dispatch}

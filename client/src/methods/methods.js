@@ -12,6 +12,22 @@ export const fetchAssets = async (dispatch) => {
   }
 };
 
+export const fetchFilteredAssets = async (dispatch, term) => {
+  try {
+    dispatch({ type: 'fetch-filtered-assets-request', loading: true });
+    const { data } = await axios.get(`/api/assets?search=${term}`);
+    console.log('in fetchFilteredAssets - data.data is:', data.data);
+    dispatch({
+      type: 'fetch-filtered-assets-ok',
+      filteredAssets: data.data,
+      loading: false,
+    });
+  } catch (error) {
+    console.log(error);
+    dispatch({ type: 'fetch-filtered-assets-fail', loading: false, error });
+  }
+};
+
 export const fetchCategories = async (dispatch) => {
   try {
     dispatch({ type: 'fetch-categories-request', loading: true });
