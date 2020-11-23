@@ -12,6 +12,10 @@ const Search = ({ searchTerm, dispatch, changeSearchTerm }) => {
     e.preventDefault();
     changeSearchTerm(dispatch, search.term.trim());
   };
+  const clearSearchTerm = () => {
+    setSearch({ term: '' });
+    changeSearchTerm(dispatch, '');
+  };
 
   return (
     <Jumbotron>
@@ -19,7 +23,15 @@ const Search = ({ searchTerm, dispatch, changeSearchTerm }) => {
         <InputGroup>
           <InputGroup.Prepend>
             <InputGroup.Text>
-              <i className='fas fa-search'></i>
+              {searchTerm ? (
+                <i
+                  className='fas fa-search-minus'
+                  style={{ color: 'darkred', cursor: 'pointer' }}
+                  onClick={clearSearchTerm}
+                ></i>
+              ) : (
+                <i className='fas fa-search'></i>
+              )}
             </InputGroup.Text>
           </InputGroup.Prepend>
           <Form.Control

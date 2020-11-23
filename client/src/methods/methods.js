@@ -19,7 +19,7 @@ export const fetchAssets = async (dispatch) => {
 export const fetchFilteredAssets = async (dispatch, term) => {
   try {
     dispatch({ type: 'fetch-filtered-assets-request', loading: true });
-    const { data } = await axios.get(`/api/assetszz?search=${term}`);
+    const { data } = await axios.get(`/api/assets?search=${term}`);
     console.log('in fetchFilteredAssets - data.data is:', data.data);
     dispatch({
       type: 'fetch-filtered-assets-ok',
