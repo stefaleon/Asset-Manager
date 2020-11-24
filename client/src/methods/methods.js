@@ -2,6 +2,10 @@ import axios from 'axios';
 
 const LIMIT = 10;
 
+export const setPage = (dispatch, page) => {
+  dispatch({ type: 'set-page', page });
+};
+
 export const changeSearchTerm = (dispatch, term) => {
   dispatch({ type: 'change-search-term', searchTerm: term });
 };
@@ -29,6 +33,10 @@ export const fetchFilteredAssets = async (dispatch, term, page) => {
       type: 'fetch-filtered-assets-ok',
       filteredAssets: data.data,
       loading: false,
+    });
+    dispatch({
+      type: 'set-number-of-pages',
+      numberOfPages: Math.ceil(data.filtered / data.limit),
     });
   } catch (error) {
     console.log(error);

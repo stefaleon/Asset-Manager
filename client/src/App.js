@@ -22,6 +22,7 @@ import {
   refreshAfterError,
   fetchFilteredAssets,
   changeSearchTerm,
+  setPage,
 } from './methods/methods';
 
 const App = () => {
@@ -33,7 +34,7 @@ const App = () => {
     error: null,
     searchTerm: '',
     filteredAssets: [],
-    numberOfPAges: 1,
+    numberOfPages: 1,
     page: 1,
   });
 
