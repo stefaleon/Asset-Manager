@@ -33,6 +33,8 @@ const App = () => {
     error: null,
     searchTerm: '',
     filteredAssets: [],
+    numberOfPAges: 1,
+    page: 1,
   });
 
   useEffect(() => {
@@ -42,8 +44,8 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    fetchFilteredAssets(dispatch, state.searchTerm);
-  }, [state.searchTerm]);
+    fetchFilteredAssets(dispatch, state.searchTerm, state.page);
+  }, [state.searchTerm, state.page]);
 
   return (
     <BrowserRouter>

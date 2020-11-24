@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+const LIMIT = 10;
+
 export const changeSearchTerm = (dispatch, term) => {
   dispatch({ type: 'change-search-term', searchTerm: term });
 };
@@ -16,10 +18,12 @@ export const fetchAssets = async (dispatch) => {
   }
 };
 
-export const fetchFilteredAssets = async (dispatch, term) => {
+export const fetchFilteredAssets = async (dispatch, term, page) => {
   try {
     dispatch({ type: 'fetch-filtered-assets-request', loading: true });
-    const { data } = await axios.get(`/api/assets?search=${term}`);
+    const { data } = await axios.get(
+      `/api/assets?search=${term}&page=${page}&limit=${LIMIT}`
+    );
     console.log('in fetchFilteredAssets - data.data is:', data.data);
     dispatch({
       type: 'fetch-filtered-assets-ok',
