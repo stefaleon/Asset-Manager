@@ -1,5 +1,5 @@
 import { useReducer, useEffect } from 'react';
-import { Container, Tabs, Tab } from 'react-bootstrap';
+import { Container, Tabs, Tab, Jumbotron } from 'react-bootstrap';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -14,6 +14,7 @@ import Assets from './components/Assets';
 import ByCategory from './components/ByCategory';
 import ByLocation from './components/ByLocation';
 import Search from './components/Search';
+import PaginationButtons from './components/PaginationButtons';
 
 import {
   fetchAssets,
@@ -69,6 +70,14 @@ const App = () => {
                   dispatch={dispatch}
                   refreshAfterError={refreshAfterError}
                 />
+                <Jumbotron>
+                  <PaginationButtons
+                    numberOfPages={state.numberOfPages}
+                    page={state.page}
+                    setPage={setPage}
+                    dispatch={dispatch}
+                  />
+                </Jumbotron>
               </Tab>
               <Tab eventKey='by-category' title='ByCategory'>
                 <ByCategory

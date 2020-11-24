@@ -1,5 +1,9 @@
 const reducer = (state, action) => {
   switch (action.type) {
+    case 'set-page':
+      return { ...state, page: action.page };
+    case 'set-number-of-pages':
+      return { ...state, numberOfPages: action.numberOfPages };
     case 'change-search-term':
       return {
         ...state,
