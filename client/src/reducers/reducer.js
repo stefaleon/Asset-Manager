@@ -8,6 +8,7 @@ const reducer = (state, action) => {
       return {
         ...state,
         searchTerm: action.searchTerm,
+        page: action.page,
       };
     case 'fetch-assets-request':
     case 'fetch-filtered-assets-request':

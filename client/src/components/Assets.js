@@ -8,7 +8,7 @@ const Assets = ({ dispatch, assets, loading, error, refreshAfterError }) => {
   };
 
   return (
-    <>
+    <div className='my-table'>
       {loading ? (
         <Loading />
       ) : error ? (
@@ -48,7 +48,7 @@ const Assets = ({ dispatch, assets, loading, error, refreshAfterError }) => {
           </tbody>
         </Table>
       )}
-    </>
+    </div>
   );
 };
 

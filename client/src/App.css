@@ -55,3 +55,12 @@
     padding: 0;
   }
 }
+
+.pagination {
+  margin: 0;
+  padding: 0;
+}
+
+.my-table {
+  min-height: 66vh;
+}

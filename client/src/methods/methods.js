@@ -7,7 +7,7 @@ export const setPage = (dispatch, page) => {
 };
 
 export const changeSearchTerm = (dispatch, term) => {
-  dispatch({ type: 'change-search-term', searchTerm: term });
+  dispatch({ type: 'change-search-term', searchTerm: term, page: 1 });
 };
 
 export const fetchAssets = async (dispatch) => {
