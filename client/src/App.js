@@ -15,6 +15,7 @@ import ByCategory from './components/ByCategory';
 import ByLocation from './components/ByLocation';
 import Search from './components/Search';
 import PaginationButtons from './components/PaginationButtons';
+import ManageAssets from './components/ManageAssets';
 
 import {
   fetchAssets,
@@ -55,6 +56,7 @@ const App = () => {
         <NavigationBar />
         <Switch>
           <Route path='/about' component={About} />
+
           <Route exact path='/'>
             <Tabs defaultActiveKey='assets' id='tabs'>
               <Tab eventKey='assets' title='Assets'>
@@ -97,6 +99,27 @@ const App = () => {
               </Tab>
             </Tabs>
           </Route>
+
+          <Route path='/assets'>
+            <ManageAssets
+              assets={state.filteredAssets}
+              loading={state.loading}
+              error={state.error}
+              dispatch={dispatch}
+              refreshAfterError={refreshAfterError}
+              searchTerm={state.searchTerm}
+              changeSearchTerm={changeSearchTerm}
+            />
+            <Jumbotron>
+              <PaginationButtons
+                numberOfPages={state.numberOfPages}
+                page={state.page}
+                setPage={setPage}
+                dispatch={dispatch}
+              />
+            </Jumbotron>
+          </Route>
+
           <Route path='/*' component={NotFound} />
         </Switch>
       </Container>

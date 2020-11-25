@@ -22,7 +22,7 @@ const ManageAssets = ({
   };
 
   return (
-    <>
+    <div className='my-table'>
       <Jumbotron>
         <Link to='/asset'>
           <Button variant='primary'>
@@ -55,33 +55,39 @@ const ManageAssets = ({
               </tr>
             </thead>
             <tbody>
-              {assets?.map((asset, index) => {
-                return (
-                  <tr key={asset._id ? asset._id : 'tempkey'}>
-                    <td>{index + 1}</td>
-                    <td>
-                      <Link to={`/asset/${asset._id}`}>
-                        <i className='far fa-edit'></i>
-                      </Link>
-                    </td>
-                    <td>{asset.name}</td>
-                    <td>{asset.description}</td>
-                    <td>
-                      <i
-                        className='far fa-trash-alt'
-                        asset-id={asset._id}
-                        onClick={onDeleteHandler}
-                        style={{ color: 'darkred', cursor: 'pointer' }}
-                      ></i>
-                    </td>
-                  </tr>
-                );
-              })}
+              {assets?.length === 0 ? (
+                <tr>
+                  <td colSpan='5'>No Assets Found</td>
+                </tr>
+              ) : (
+                assets?.map((asset, index) => {
+                  return (
+                    <tr key={asset._id ? asset._id : 'tempkey'}>
+                      <td>{index + 1}</td>
+                      <td>
+                        <Link to={`/asset/${asset._id}`}>
+                          <i className='far fa-edit'></i>
+                        </Link>
+                      </td>
+                      <td>{asset.name}</td>
+                      <td>{asset.description}</td>
+                      <td>
+                        <i
+                          className='far fa-trash-alt'
+                          asset-id={asset._id}
+                          onClick={onDeleteHandler}
+                          style={{ color: 'darkred', cursor: 'pointer' }}
+                        ></i>
+                      </td>
+                    </tr>
+                  );
+                })
+              )}
             </tbody>
           </Table>
         </>
       )}
-    </>
+    </div>
   );
 };
 
