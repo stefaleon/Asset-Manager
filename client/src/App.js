@@ -26,6 +26,7 @@ import {
   fetchFilteredAssets,
   changeSearchTerm,
   setPage,
+  addAsset,
 } from './methods/methods';
 
 const App = () => {
@@ -130,6 +131,8 @@ const App = () => {
                 create={true}
                 categories={state.categories}
                 locations={state.locations}
+                dispatch={dispatch}
+                addAsset={addAsset}
               />
             )}
           />

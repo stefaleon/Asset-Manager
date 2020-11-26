@@ -1,7 +1,14 @@
 import { useState } from 'react';
 import { Alert, Form, Button } from 'react-bootstrap';
 
-const AssetForm = ({ create, categories, locations }) => {
+const AssetForm = ({
+  create,
+  categories,
+  locations,
+  dispatch,
+  addAsset,
+  history,
+}) => {
   const [asset, setAsset] = useState({
     name: '',
     description: '',
@@ -17,8 +24,12 @@ const AssetForm = ({ create, categories, locations }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
+    addAsset(dispatch, asset);
     document.getElementById('editing').classList.add('hidden');
     document.getElementById('submitted').classList.remove('hidden');
+    setTimeout(() => {
+      history.push('/assets');
+    }, 1500);
   };
 
   return (

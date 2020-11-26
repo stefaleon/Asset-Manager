@@ -79,3 +79,15 @@ export const fetchLocations = async (dispatch) => {
 export const refreshAfterError = (dispatch) => {
   dispatch({ type: 'refresh-after-error', error: null });
 };
+
+export const addAsset = async (dispatch, postData) => {
+  try {
+    dispatch({ type: 'add-asset-request', loading: true });
+    const { data } = await axios.post('/api/assets', postData);
+    console.log('in addAsset - data.data is:', data.data);
+    dispatch({ type: 'add-asset-ok', newAsset: data.data, loading: false });
+  } catch (error) {
+    console.log(error);
+    dispatch({ type: 'add-asset-fail', loading: false, error });
+  }
+};
