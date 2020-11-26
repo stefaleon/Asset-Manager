@@ -18,7 +18,7 @@ const AssetForm = ({ create, categories, locations }) => {
   const onSubmit = (e) => {
     e.preventDefault();
     document.getElementById('editing').classList.add('hidden');
-    document.getElementById('submitted').classList.delete('hidden');
+    document.getElementById('submitted').classList.remove('hidden');
   };
 
   return (

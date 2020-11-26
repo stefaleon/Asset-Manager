@@ -16,6 +16,7 @@ import ByLocation from './components/ByLocation';
 import Search from './components/Search';
 import PaginationButtons from './components/PaginationButtons';
 import ManageAssets from './components/ManageAssets';
+import AssetForm from './components/AssetForm';
 
 import {
   fetchAssets,
@@ -119,6 +120,19 @@ const App = () => {
               />
             </Jumbotron>
           </Route>
+
+          <Route
+            path='/asset'
+            exact
+            render={(props) => (
+              <AssetForm
+                {...props}
+                create={true}
+                categories={state.categories}
+                locations={state.locations}
+              />
+            )}
+          />
 
           <Route path='/*' component={NotFound} />
         </Switch>
