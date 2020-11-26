@@ -29,6 +29,7 @@ const AssetForm = ({
     document.getElementById('submitted').classList.remove('hidden');
     setTimeout(() => {
       history.push('/assets');
+      window.location.reload();
     }, 1500);
   };
 

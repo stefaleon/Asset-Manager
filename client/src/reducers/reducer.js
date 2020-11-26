@@ -17,7 +17,11 @@ const reducer = (state, action) => {
     case 'add-asset-request':
       return { ...state, loading: action.loading };
     case 'fetch-assets-ok':
-      return { ...state, assets: action.assets, loading: action.loading };
+      return {
+        ...state,
+        assets: action.assets,
+        // loading: action.loading,
+      };
     case 'fetch-filtered-assets-ok':
       return {
         ...state,
@@ -28,13 +32,13 @@ const reducer = (state, action) => {
       return {
         ...state,
         categories: action.categories,
-        loading: action.loading,
+        // loading: action.loading,
       };
     case 'fetch-locations-ok':
       return {
         ...state,
         locations: action.locations,
-        loading: action.loading,
+        // loading: action.loading,
       };
     case 'add-asset-ok':
       return {
