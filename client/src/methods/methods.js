@@ -92,6 +92,22 @@ export const addAsset = async (dispatch, postData) => {
   }
 };
 
+export const updateAsset = async (dispatch, id, postData) => {
+  try {
+    dispatch({ type: 'update-asset-request', loading: true });
+    const { data } = await axios.patch(`/api/assets/${id}`, postData);
+    console.log('in updateAsset - data.data is:', data.data);
+    dispatch({
+      type: 'update-asset-ok',
+      updatedAsset: data.data,
+      loading: false,
+    });
+  } catch (error) {
+    console.log(error);
+    dispatch({ type: 'update-asset-fail', loading: false, error });
+  }
+};
+
 export const deleteAsset = async (dispatch, id) => {
   try {
     dispatch({ type: 'delete-asset-request', loading: true });

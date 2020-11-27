@@ -27,6 +27,7 @@ import {
   changeSearchTerm,
   setPage,
   addAsset,
+  updateAsset,
   deleteAsset,
 } from './methods/methods';
 
@@ -151,7 +152,7 @@ const App = () => {
                 categories={state.categories}
                 locations={state.locations}
                 dispatch={dispatch}
-                // updateAsset={updateAsset}
+                updateAsset={updateAsset}
               />
             )}
           />

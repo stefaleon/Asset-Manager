@@ -24,7 +24,7 @@ const Assets = ({ dispatch, assets, loading, error, refreshAfterError }) => {
               <th>Name</th>
               <th>Description</th>
               <th>Category</th>
-              <th>Description</th>
+              <th>Location</th>
             </tr>
           </thead>
           <tbody>

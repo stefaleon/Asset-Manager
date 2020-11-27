@@ -9,6 +9,7 @@ const AssetForm = ({
   addAsset,
   history,
   assetToUpdate,
+  updateAsset,
 }) => {
   const [asset, setAsset] = useState(
     assetToUpdate
@@ -34,7 +35,11 @@ const AssetForm = ({
 
   const onSubmit = (e) => {
     e.preventDefault();
-    addAsset(dispatch, asset);
+    if (create) {
+      addAsset(dispatch, asset);
+    } else {
+      updateAsset(dispatch, assetToUpdate._id, asset);
+    }
     document.getElementById('editing').classList.add('hidden');
     document.getElementById('submitted').classList.remove('hidden');
     setTimeout(() => {
