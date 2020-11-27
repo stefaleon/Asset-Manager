@@ -68,3 +68,8 @@
 .hidden {
   display: none;
 }
+
+td {
+  max-width: 120px;
+  word-wrap: break-word;
+}
