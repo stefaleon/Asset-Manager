@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Alert, Form, Button } from 'react-bootstrap';
 
 const AssetForm = ({
@@ -47,6 +47,12 @@ const AssetForm = ({
       window.location.reload();
     }, 1500);
   };
+
+  useEffect(() => {
+    if (!assetToUpdate) {
+      history.push('/asset');
+    }
+  }, [assetToUpdate, history]);
 
   return (
     <>
