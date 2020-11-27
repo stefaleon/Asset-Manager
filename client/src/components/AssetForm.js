@@ -8,13 +8,23 @@ const AssetForm = ({
   dispatch,
   addAsset,
   history,
+  assetToUpdate,
 }) => {
-  const [asset, setAsset] = useState({
-    name: '',
-    description: '',
-    category: '5f8e782efd960400178547c8', // hardcode a category id for assets with unassigned category
-    location: '5fa027494b79a300171969a9', // hardcode a location id for assets with unassigned location
-  });
+  const [asset, setAsset] = useState(
+    assetToUpdate
+      ? {
+          name: assetToUpdate.name,
+          description: assetToUpdate.description,
+          category: assetToUpdate.category._id ?? '5f8e782efd960400178547c8',
+          location: assetToUpdate.location._id ?? '5fa027494b79a300171969a9',
+        }
+      : {
+          name: '',
+          description: '',
+          category: '5f8e782efd960400178547c8', // hardcode a category id for assets with unassigned category
+          location: '5fa027494b79a300171969a9', // hardcode a location id for assets with unassigned location
+        }
+  );
 
   const onChange = (e) => {
     document.getElementById('editing').classList.remove('hidden');
@@ -38,6 +48,11 @@ const AssetForm = ({
       {create && (
         <div id='editing'>
           <Alert variant='primary'>Create Asset</Alert>
+        </div>
+      )}
+      {!create && (
+        <div id='editing'>
+          <Alert variant='primary'>Update Asset</Alert>
         </div>
       )}
       <div id='submitted' className='hidden'>

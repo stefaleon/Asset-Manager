@@ -139,6 +139,23 @@ const App = () => {
             )}
           />
 
+          <Route
+            path='/asset/:id'
+            render={(props) => (
+              <AssetForm
+                {...props}
+                create={false}
+                assetToUpdate={state.assets.find(
+                  (x) => x._id === props.match.params.id
+                )}
+                categories={state.categories}
+                locations={state.locations}
+                dispatch={dispatch}
+                // updateAsset={updateAsset}
+              />
+            )}
+          />
+
           <Route path='/*' component={NotFound} />
         </Switch>
       </Container>
