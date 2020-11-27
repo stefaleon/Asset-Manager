@@ -12,9 +12,13 @@ const ManageAssets = ({
   refreshAfterError,
   searchTerm,
   changeSearchTerm,
+  deleteAsset,
 }) => {
   const onDeleteHandler = (e) => {
     console.log(`delete asset with id ${e.target.getAttribute('asset-id')}`);
+    if (window.confirm('Confirm Asset Deletion')) {
+      deleteAsset(dispatch, e.target.getAttribute('asset-id'));
+    }
   };
 
   const onRefreshHandler = () => {

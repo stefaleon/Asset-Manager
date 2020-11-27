@@ -91,3 +91,14 @@ export const addAsset = async (dispatch, postData) => {
     dispatch({ type: 'add-asset-fail', loading: false, error });
   }
 };
+
+export const deleteAsset = async (dispatch, id) => {
+  try {
+    dispatch({ type: 'delete-asset-request', loading: true });
+    await axios.delete(`/api/assets/${id}`);
+    dispatch({ type: 'delete-asset-ok', deletedId: id, loading: false });
+  } catch (error) {
+    console.log(error);
+    dispatch({ type: 'delete-asset-fail', loading: false, error });
+  }
+};

@@ -27,6 +27,7 @@ import {
   changeSearchTerm,
   setPage,
   addAsset,
+  deleteAsset,
 } from './methods/methods';
 
 const App = () => {
@@ -111,6 +112,7 @@ const App = () => {
               refreshAfterError={refreshAfterError}
               searchTerm={state.searchTerm}
               changeSearchTerm={changeSearchTerm}
+              deleteAsset={deleteAsset}
             />
             <Jumbotron>
               <PaginationButtons

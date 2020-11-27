@@ -15,6 +15,7 @@ const reducer = (state, action) => {
     case 'fetch-categories-request':
     case 'fetch-locations-request':
     case 'add-asset-request':
+    case 'delete-asset-request':
       return { ...state, loading: action.loading };
     case 'fetch-assets-ok':
       return {
@@ -47,11 +48,21 @@ const reducer = (state, action) => {
         filteredAssets: [action.newAsset, ...state.filteredAssets],
         loading: action.loading,
       };
+    case 'delete-asset-ok':
+      return {
+        ...state,
+        assets: state.assets.filter((x) => x._id !== action.deletedId),
+        filteredAssets: state.filteredAssets.filter(
+          (x) => x._id !== action.deletedId
+        ),
+        loading: action.loading,
+      };
     case 'fetch-assets-fail':
     case 'fetch-filtered-assets-fail':
     case 'fetch-categories-fail':
     case 'fetch-locations-fail':
     case 'add-asset-fail':
+    case 'delete-asset-fail':
       return { ...state, loading: action.loading, error: action.error };
     case 'refresh-after-error':
       return { ...state, error: action.error };
