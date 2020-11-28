@@ -25,6 +25,7 @@ const reducer = (state, action) => {
     case 'fetch-filtered-categories-request':
     case 'add-category-request':
     case 'update-category-request':
+    case 'delete-category-request':
       return { ...state, loading: action.loading };
     case 'fetch-assets-ok':
       return {
@@ -101,6 +102,15 @@ const reducer = (state, action) => {
         ),
         loading: action.loading,
       };
+    case 'delete-category-ok':
+      return {
+        ...state,
+        categories: state.categories.filter((x) => x._id !== action.deletedId),
+        filteredCategories: state.filteredCategories.filter(
+          (x) => x._id !== action.deletedId
+        ),
+        loading: action.loading,
+      };
     case 'fetch-assets-fail':
     case 'fetch-filtered-assets-fail':
     case 'fetch-categories-fail':
@@ -111,6 +121,7 @@ const reducer = (state, action) => {
     case 'fetch-filtered-categories-fail':
     case 'add-category-fail':
     case 'update-category-fail':
+    case 'delete-category-fail':
       return { ...state, loading: action.loading, error: action.error };
     case 'refresh-after-error':
       return { ...state, error: action.error };

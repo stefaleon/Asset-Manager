@@ -170,3 +170,14 @@ export const updateCategory = async (dispatch, id, postData) => {
     dispatch({ type: 'update-category-fail', loading: false, error });
   }
 };
+
+export const deleteCategory = async (dispatch, id) => {
+  try {
+    dispatch({ type: 'delete-category-request', loading: true });
+    await axios.delete(`/api/categories/${id}`);
+    dispatch({ type: 'delete-category-ok', deletedId: id, loading: false });
+  } catch (error) {
+    console.log(error);
+    dispatch({ type: 'delete-category-fail', loading: false, error });
+  }
+};

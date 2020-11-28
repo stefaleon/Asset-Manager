@@ -35,6 +35,7 @@ import {
   changeCategorySearchTerm,
   addCategory,
   updateCategory,
+  deleteCategory,
 } from './methods/methods';
 
 const App = () => {
@@ -178,6 +179,7 @@ const App = () => {
               refreshAfterError={refreshAfterError}
               searchTerm={state.categorySearchTerm}
               changeSearchTerm={changeCategorySearchTerm}
+              deleteCategory={deleteCategory}
             />
           </Route>
 
