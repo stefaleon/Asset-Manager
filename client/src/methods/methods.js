@@ -138,3 +138,19 @@ export const deleteAsset = async (dispatch, id) => {
     dispatch({ type: 'delete-asset-fail', loading: false, error });
   }
 };
+
+export const addCategory = async (dispatch, postData) => {
+  try {
+    dispatch({ type: 'add-category-request', loading: true });
+    const { data } = await axios.post('/api/categories', postData);
+    console.log('in addCategory - data.data is:', data.data);
+    dispatch({
+      type: 'add-category-ok',
+      newCategory: data.data,
+      loading: false,
+    });
+  } catch (error) {
+    console.log(error);
+    dispatch({ type: 'add-category-fail', loading: false, error });
+  }
+};

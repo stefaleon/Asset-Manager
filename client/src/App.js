@@ -33,6 +33,7 @@ import {
   deleteAsset,
   fetchFilteredCategories,
   changeCategorySearchTerm,
+  addCategory,
 } from './methods/methods';
 
 const App = () => {
@@ -187,7 +188,7 @@ const App = () => {
                 {...props}
                 create={true}
                 dispatch={dispatch}
-                // addCategory={addCategory}
+                addCategory={addCategory}
               />
             )}
           />
