@@ -18,6 +18,7 @@ import PaginationButtons from './components/PaginationButtons';
 import ManageAssets from './components/ManageAssets';
 import AssetForm from './components/AssetForm';
 import ManageCategories from './components/ManageCategories';
+import CategoryForm from './components/CategoryForm';
 
 import {
   fetchAssets,
@@ -177,6 +178,19 @@ const App = () => {
               changeSearchTerm={changeCategorySearchTerm}
             />
           </Route>
+
+          <Route
+            path='/category'
+            exact
+            render={(props) => (
+              <CategoryForm
+                {...props}
+                create={true}
+                dispatch={dispatch}
+                // addCategory={addCategory}
+              />
+            )}
+          />
 
           <Route path='/*' component={NotFound} />
         </Switch>
