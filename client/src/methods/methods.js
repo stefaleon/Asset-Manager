@@ -154,3 +154,19 @@ export const addCategory = async (dispatch, postData) => {
     dispatch({ type: 'add-category-fail', loading: false, error });
   }
 };
+
+export const updateCategory = async (dispatch, id, postData) => {
+  try {
+    dispatch({ type: 'update-category-request', loading: true });
+    const { data } = await axios.patch(`/api/categories/${id}`, postData);
+    console.log('in updateCategory - data.data is:', data.data);
+    dispatch({
+      type: 'update-category-ok',
+      updatedCategory: data.data,
+      loading: false,
+    });
+  } catch (error) {
+    console.log(error);
+    dispatch({ type: 'update-category-fail', loading: false, error });
+  }
+};

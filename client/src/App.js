@@ -34,6 +34,7 @@ import {
   fetchFilteredCategories,
   changeCategorySearchTerm,
   addCategory,
+  updateCategory,
 } from './methods/methods';
 
 const App = () => {
@@ -189,6 +190,21 @@ const App = () => {
                 create={true}
                 dispatch={dispatch}
                 addCategory={addCategory}
+              />
+            )}
+          />
+
+          <Route
+            path='/category/:id'
+            render={(props) => (
+              <CategoryForm
+                {...props}
+                create={false}
+                categoryToUpdate={state.categories.find(
+                  (x) => x._id === props.match.params.id
+                )}
+                dispatch={dispatch}
+                updateCategory={updateCategory}
               />
             )}
           />
