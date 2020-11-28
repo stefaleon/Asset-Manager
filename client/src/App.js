@@ -30,6 +30,8 @@ import {
   addAsset,
   updateAsset,
   deleteAsset,
+  fetchFilteredCategories,
+  changeCategorySearchTerm,
 } from './methods/methods';
 
 const App = () => {
@@ -43,6 +45,8 @@ const App = () => {
     filteredAssets: [],
     numberOfPages: 1,
     page: 1,
+    categorySearchTerm: '',
+    filteredCategories: [],
   });
 
   useEffect(() => {
@@ -54,6 +58,10 @@ const App = () => {
   useEffect(() => {
     fetchFilteredAssets(dispatch, state.searchTerm, state.page);
   }, [state.searchTerm, state.page]);
+
+  useEffect(() => {
+    fetchFilteredCategories(dispatch, state.categorySearchTerm);
+  }, [state.categorySearchTerm]);
 
   return (
     <BrowserRouter>
@@ -160,11 +168,13 @@ const App = () => {
 
           <Route path='/categories'>
             <ManageCategories
-              categories={[]}
+              categories={state.filteredCategories}
               loading={state.loading}
               error={state.error}
               dispatch={dispatch}
               refreshAfterError={refreshAfterError}
+              searchTerm={state.categorySearchTerm}
+              changeSearchTerm={changeCategorySearchTerm}
             />
           </Route>
 

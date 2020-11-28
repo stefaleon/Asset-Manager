@@ -10,6 +10,10 @@ export const changeSearchTerm = (dispatch, term) => {
   dispatch({ type: 'change-search-term', searchTerm: term, page: 1 });
 };
 
+export const changeCategorySearchTerm = (dispatch, term) => {
+  dispatch({ type: 'change-category-search-term', categorySearchTerm: term });
+};
+
 export const fetchAssets = async (dispatch) => {
   try {
     dispatch({ type: 'fetch-assets-request', loading: true });
@@ -57,6 +61,22 @@ export const fetchCategories = async (dispatch) => {
   } catch (error) {
     console.log(error);
     dispatch({ type: 'fetch-categories-fail', loading: false, error });
+  }
+};
+
+export const fetchFilteredCategories = async (dispatch, term) => {
+  try {
+    dispatch({ type: 'fetch-filtered-categories-request', loading: true });
+    const { data } = await axios.get(`/api/categories?search=${term}`);
+    console.log('in fetchFilteredCategories - data.data is:', data.data);
+    dispatch({
+      type: 'fetch-filtered-categories-ok',
+      filteredCategories: data.data,
+      loading: false,
+    });
+  } catch (error) {
+    console.log(error);
+    dispatch({ type: 'fetch-filtered-categories-fail', loading: false, error });
   }
 };
 
