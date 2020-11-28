@@ -17,6 +17,7 @@ import Search from './components/Search';
 import PaginationButtons from './components/PaginationButtons';
 import ManageAssets from './components/ManageAssets';
 import AssetForm from './components/AssetForm';
+import ManageCategories from './components/ManageCategories';
 
 import {
   fetchAssets,
@@ -156,6 +157,16 @@ const App = () => {
               />
             )}
           />
+
+          <Route path='/categories'>
+            <ManageCategories
+              categories={[]}
+              loading={state.loading}
+              error={state.error}
+              dispatch={dispatch}
+              refreshAfterError={refreshAfterError}
+            />
+          </Route>
 
           <Route path='/*' component={NotFound} />
         </Switch>
