@@ -15,6 +15,11 @@ const reducer = (state, action) => {
         ...state,
         categorySearchTerm: action.categorySearchTerm,
       };
+    case 'change-location-search-term':
+      return {
+        ...state,
+        locationSearchTerm: action.locationSearchTerm,
+      };
     case 'fetch-assets-request':
     case 'fetch-filtered-assets-request':
     case 'fetch-categories-request':
@@ -26,6 +31,7 @@ const reducer = (state, action) => {
     case 'add-category-request':
     case 'update-category-request':
     case 'delete-category-request':
+    case 'fetch-filtered-locations-request':
       return { ...state, loading: action.loading };
     case 'fetch-assets-ok':
       return {
@@ -56,6 +62,12 @@ const reducer = (state, action) => {
         ...state,
         locations: action.locations,
         // loading: action.loading,
+      };
+    case 'fetch-filtered-locations-ok':
+      return {
+        ...state,
+        filteredLocations: action.filteredLocations,
+        loading: action.loading,
       };
     case 'add-asset-ok':
       return {
@@ -122,6 +134,7 @@ const reducer = (state, action) => {
     case 'add-category-fail':
     case 'update-category-fail':
     case 'delete-category-fail':
+    case 'fetch-filtered-locations-fail':
       return { ...state, loading: action.loading, error: action.error };
     case 'refresh-after-error':
       return { ...state, error: action.error };

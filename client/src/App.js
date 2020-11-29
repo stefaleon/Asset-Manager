@@ -19,6 +19,7 @@ import ManageAssets from './components/ManageAssets';
 import AssetForm from './components/AssetForm';
 import ManageCategories from './components/ManageCategories';
 import CategoryForm from './components/CategoryForm';
+import ManageLocations from './components/ManageLocations';
 
 import {
   fetchAssets,
@@ -36,6 +37,8 @@ import {
   addCategory,
   updateCategory,
   deleteCategory,
+  fetchFilteredLocations,
+  changeLocationSearchTerm,
 } from './methods/methods';
 
 const App = () => {
@@ -51,6 +54,8 @@ const App = () => {
     page: 1,
     categorySearchTerm: '',
     filteredCategories: [],
+    locationSearchTerm: '',
+    filteredLocations: [],
   });
 
   useEffect(() => {
@@ -66,6 +71,10 @@ const App = () => {
   useEffect(() => {
     fetchFilteredCategories(dispatch, state.categorySearchTerm);
   }, [state.categorySearchTerm]);
+
+  useEffect(() => {
+    fetchFilteredLocations(dispatch, state.locationSearchTerm);
+  }, [state.locationSearchTerm]);
 
   return (
     <BrowserRouter>
@@ -210,6 +219,19 @@ const App = () => {
               />
             )}
           />
+
+          <Route path='/locations'>
+            <ManageLocations
+              locations={state.filteredLocations}
+              loading={state.loading}
+              error={state.error}
+              dispatch={dispatch}
+              refreshAfterError={refreshAfterError}
+              searchTerm={state.locationSearchTerm}
+              changeSearchTerm={changeLocationSearchTerm}
+              // deleteLocation={deleteLocation}
+            />
+          </Route>
 
           <Route path='/*' component={NotFound} />
         </Switch>
