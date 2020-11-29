@@ -20,6 +20,7 @@ import AssetForm from './components/AssetForm';
 import ManageCategories from './components/ManageCategories';
 import CategoryForm from './components/CategoryForm';
 import ManageLocations from './components/ManageLocations';
+import LocationForm from './components/LocationForm';
 
 import {
   fetchAssets,
@@ -232,6 +233,34 @@ const App = () => {
               // deleteLocation={deleteLocation}
             />
           </Route>
+
+          <Route
+            path='/location'
+            exact
+            render={(props) => (
+              <LocationForm
+                {...props}
+                create={true}
+                dispatch={dispatch}
+                // addLocation={addLocation}
+              />
+            )}
+          />
+
+          <Route
+            path='/location/:id'
+            render={(props) => (
+              <LocationForm
+                {...props}
+                create={false}
+                locationToUpdate={state.locations.find(
+                  (x) => x._id === props.match.params.id
+                )}
+                dispatch={dispatch}
+                // updateLocation={updateLocation}
+              />
+            )}
+          />
 
           <Route path='/*' component={NotFound} />
         </Switch>
