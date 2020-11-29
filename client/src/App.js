@@ -40,6 +40,9 @@ import {
   deleteCategory,
   fetchFilteredLocations,
   changeLocationSearchTerm,
+  addLocation,
+  updateLocation,
+  deleteLocation,
 } from './methods/methods';
 
 const App = () => {
@@ -230,7 +233,7 @@ const App = () => {
               refreshAfterError={refreshAfterError}
               searchTerm={state.locationSearchTerm}
               changeSearchTerm={changeLocationSearchTerm}
-              // deleteLocation={deleteLocation}
+              deleteLocation={deleteLocation}
             />
           </Route>
 
@@ -242,7 +245,7 @@ const App = () => {
                 {...props}
                 create={true}
                 dispatch={dispatch}
-                // addLocation={addLocation}
+                addLocation={addLocation}
               />
             )}
           />
@@ -257,7 +260,7 @@ const App = () => {
                   (x) => x._id === props.match.params.id
                 )}
                 dispatch={dispatch}
-                // updateLocation={updateLocation}
+                updateLocation={updateLocation}
               />
             )}
           />

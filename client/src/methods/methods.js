@@ -204,3 +204,46 @@ export const deleteCategory = async (dispatch, id) => {
     dispatch({ type: 'delete-category-fail', loading: false, error });
   }
 };
+
+export const addLocation = async (dispatch, postData) => {
+  try {
+    dispatch({ type: 'add-location-request', loading: true });
+    const { data } = await axios.post('/api/locations', postData);
+    console.log('in addLocation - data.data is:', data.data);
+    dispatch({
+      type: 'add-location-ok',
+      newLocation: data.data,
+      loading: false,
+    });
+  } catch (error) {
+    console.log(error);
+    dispatch({ type: 'add-location-fail', loading: false, error });
+  }
+};
+
+export const updateLocation = async (dispatch, id, postData) => {
+  try {
+    dispatch({ type: 'update-location-request', loading: true });
+    const { data } = await axios.patch(`/api/locations/${id}`, postData);
+    console.log('in updateLocation - data.data is:', data.data);
+    dispatch({
+      type: 'update-location-ok',
+      updatedLocation: data.data,
+      loading: false,
+    });
+  } catch (error) {
+    console.log(error);
+    dispatch({ type: 'update-location-fail', loading: false, error });
+  }
+};
+
+export const deleteLocation = async (dispatch, id) => {
+  try {
+    dispatch({ type: 'delete-location-request', loading: true });
+    await axios.delete(`/api/locations/${id}`);
+    dispatch({ type: 'delete-location-ok', deletedId: id, loading: false });
+  } catch (error) {
+    console.log(error);
+    dispatch({ type: 'delete-location-fail', loading: false, error });
+  }
+};

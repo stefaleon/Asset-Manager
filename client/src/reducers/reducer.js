@@ -32,6 +32,9 @@ const reducer = (state, action) => {
     case 'update-category-request':
     case 'delete-category-request':
     case 'fetch-filtered-locations-request':
+    case 'add-location-request':
+    case 'update-location-request':
+    case 'delete-location-request':
       return { ...state, loading: action.loading };
     case 'fetch-assets-ok':
       return {
@@ -83,6 +86,13 @@ const reducer = (state, action) => {
         filteredCategories: [action.newCategory, ...state.filteredCategories],
         loading: action.loading,
       };
+    case 'add-location-ok':
+      return {
+        ...state,
+        locations: [action.newLocation, ...state.locations],
+        filteredLocations: [action.newLocation, ...state.filteredLocations],
+        loading: action.loading,
+      };
     case 'update-asset-ok':
       return {
         ...state,
@@ -105,6 +115,17 @@ const reducer = (state, action) => {
         ),
         loading: action.loading,
       };
+    case 'update-location-ok':
+      return {
+        ...state,
+        locations: state.locations.map((x) =>
+          x._id === action.updatedLocation._id ? action.updatedLocation : x
+        ),
+        filteredLocations: state.filteredLocations.map((x) =>
+          x._id === action.updatedLocation._id ? action.updatedLocation : x
+        ),
+        loading: action.loading,
+      };
     case 'delete-asset-ok':
       return {
         ...state,
@@ -123,6 +144,15 @@ const reducer = (state, action) => {
         ),
         loading: action.loading,
       };
+    case 'delete-location-ok':
+      return {
+        ...state,
+        locations: state.locations.filter((x) => x._id !== action.deletedId),
+        filteredLocations: state.filteredLocations.filter(
+          (x) => x._id !== action.deletedId
+        ),
+        loading: action.loading,
+      };
     case 'fetch-assets-fail':
     case 'fetch-filtered-assets-fail':
     case 'fetch-categories-fail':
@@ -135,6 +165,9 @@ const reducer = (state, action) => {
     case 'update-category-fail':
     case 'delete-category-fail':
     case 'fetch-filtered-locations-fail':
+    case 'add-location-fail':
+    case 'update-location-fail':
+    case 'delete-location-fail':
       return { ...state, loading: action.loading, error: action.error };
     case 'refresh-after-error':
       return { ...state, error: action.error };
