@@ -7,6 +7,7 @@ require('dotenv').config();
 const categoriesRoutes = require('./routes/categories');
 const locationsRoutes = require('./routes/locations');
 const assetsRoutes = require('./routes/assets');
+const usersRoutes = require('./routes/users');
 
 const app = express();
 
@@ -19,6 +20,7 @@ app.get('/', (req, res) => {
 app.use('/api/categories', categoriesRoutes);
 app.use('/api/locations', locationsRoutes);
 app.use('/api/assets', assetsRoutes);
+app.use('/api/users', usersRoutes);
 
 app.use((err, req, res, next) => {
   console.error(err.message);
