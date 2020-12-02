@@ -2,15 +2,16 @@ const express = require('express');
 const router = express.Router();
 
 const assetsController = require('../controllers/assets');
+const authorize = require('../middleware/authorize');
 
-router.post('/', assetsController.createAsset);
+router.post('/', authorize, assetsController.createAsset);
 
 router.get('/', assetsController.readAssets);
 
 router.get('/:id', assetsController.readAsset);
 
-router.patch('/:id', assetsController.updateAsset);
+router.patch('/:id', authorize, assetsController.updateAsset);
 
-router.delete('/:id', assetsController.deleteAsset);
+router.delete('/:id', authorize, assetsController.deleteAsset);
 
 module.exports = router;
