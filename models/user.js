@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+const jwt = require('jsonwebtoken');
 const validateEmail = require('../utils/validate-email');
 
 const userSchema = new mongoose.Schema(
@@ -24,5 +24,13 @@ const userSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+
+userSchema.methods.generateToken = function () {
+  return jwt.sign(
+    { id: this._id, name: this.name, admin: this.admin },
+    process.env.SECRET,
+    { expiresIn: '1d' }
+  );
+};
 
 module.exports = mongoose.model('User', userSchema);
