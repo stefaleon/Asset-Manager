@@ -2,6 +2,7 @@ const bcrypt = require('bcryptjs');
 
 const User = require('../models/user');
 const validateEmail = require('../utils/validate-email');
+const defineUserSearchQuery = require('../utils/define-user-search-query');
 
 exports.createUser = async (req, res, next) => {
   try {
@@ -66,6 +67,18 @@ exports.loginUser = async (req, res, next) => {
     }
 
     res.status(200).json({ token: user.generateToken() });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.readUsers = async (req, res, next) => {
+  try {
+    const searchQuery = defineUserSearchQuery(req);
+    const users = await User.find(searchQuery)
+      .select('-password')
+      .sort('email');
+    res.status(200).json({ data: users });
   } catch (err) {
     next(err);
   }

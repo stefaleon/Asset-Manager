@@ -6,5 +6,6 @@ const authorize = require('../middleware/authorize');
 
 router.post('/', authorize, usersController.createUser);
 router.post('/login', usersController.loginUser);
+router.get('/', usersController.readUsers);
 
 module.exports = router;
