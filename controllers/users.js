@@ -5,6 +5,10 @@ const validateEmail = require('../utils/validate-email');
 
 exports.createUser = async (req, res, next) => {
   try {
+    if (req.body.admin && !req.user.admin) {
+      return res.status(403).json({ error: 'Forbidden' });
+    }
+
     if (!req.body.name) {
       return res
         .status(400)
