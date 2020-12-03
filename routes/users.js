@@ -7,5 +7,6 @@ const adminonly = require('../middleware/adminonly');
 router.post('/', adminonly, usersController.createUser);
 router.post('/login', usersController.loginUser);
 router.get('/', adminonly, usersController.readUsers);
+router.get('/:id', adminonly, usersController.readUser);
 
 module.exports = router;
