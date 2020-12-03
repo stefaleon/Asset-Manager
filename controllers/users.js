@@ -31,7 +31,7 @@ exports.createUser = async (req, res, next) => {
     if (!req.body.password || req.body.password.length < 6) {
       return res
         .status(400)
-        .json({ error: 'Please enter a six or more charecters long password' });
+        .json({ error: 'Please enter a six or more characters long password' });
     }
 
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
@@ -119,7 +119,7 @@ exports.updateUser = async (req, res, next) => {
     if (req.body.password) {
       if (req.body.password.length < 6) {
         return res.status(400).json({
-          error: 'Please enter a six or more charecters long password',
+          error: 'Please enter a six or more characters long password',
         });
       }
       const hashedPassword = await bcrypt.hash(req.body.password, 10);
@@ -142,6 +142,36 @@ exports.deleteUser = async (req, res, next) => {
     }
     const deleted = await user.remove();
     res.status(200).json({ data: deleted });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.changeOwnPassword = async (req, res, next) => {
+  try {
+    if (req.user._id.toString() !== req.params.id.toString()) {
+      return res
+        .status(400)
+        .json({ error: 'Users can change their own password only' });
+    }
+
+    const user = await User.findById(req.params.id).select('-password');
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    if (req.body.password) {
+      if (req.body.password.length < 6) {
+        return res.status(400).json({
+          error: 'Please enter a six or more characters long password',
+        });
+      }
+      const hashedPassword = await bcrypt.hash(req.body.password, 10);
+      user.set({ password: hashedPassword }).save();
+    }
+
+    res.status(200).json({ msg: 'Password changed' });
   } catch (err) {
     next(err);
   }
