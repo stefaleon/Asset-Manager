@@ -2,10 +2,10 @@ const express = require('express');
 const router = express.Router();
 
 const usersController = require('../controllers/users');
-const authorize = require('../middleware/authorize');
+const adminonly = require('../middleware/adminonly');
 
-router.post('/', authorize, usersController.createUser);
+router.post('/', adminonly, usersController.createUser);
 router.post('/login', usersController.loginUser);
-router.get('/', usersController.readUsers);
+router.get('/', adminonly, usersController.readUsers);
 
 module.exports = router;
