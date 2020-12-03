@@ -97,3 +97,39 @@ exports.readUser = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.updateUser = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.params.id).select('-password');
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    const emailExists = await User.findOne({ email: req.body.email });
+
+    if (emailExists) {
+      return res.status(400).json({ error: 'Email already registered' });
+    }
+
+    if (req.body.admin && !req.user.admin) {
+      return res.status(403).json({ error: 'Forbidden' });
+    }
+
+    if (req.body.password) {
+      if (req.body.password.length < 6) {
+        return res.status(400).json({
+          error: 'Please enter a six or more charecters long password',
+        });
+      }
+      const hashedPassword = await bcrypt.hash(req.body.password, 10);
+      user.set({ ...req.body, password: hashedPassword }).save();
+    } else {
+      user.set(req.body).save();
+    }
+
+    res.status(200).json({ token: user.generateToken() });
+  } catch (err) {
+    next(err);
+  }
+};
