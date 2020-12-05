@@ -64,7 +64,10 @@ const App = () => {
     filteredCategories: [],
     locationSearchTerm: '',
     filteredLocations: [],
+    token: null,
   });
+
+  setToken(state.token); // set headers again after page reloads
 
   useEffect(() => {
     fetchAssets(dispatch);

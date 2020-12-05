@@ -248,7 +248,15 @@ export const deleteLocation = async (dispatch, id) => {
   }
 };
 
-export const setToken = () => {};
+export const setToken = (token) => {
+  if (token) {
+    axios.defaults.headers.common['Authorization'] = token;
+    localStorage.setItem('token', token);
+  } else {
+    delete axios.defaults.headers.common['Authorization'];
+    localStorage.removeItem('token');
+  }
+};
 
 export const loginUser = () => {};
 
