@@ -247,3 +247,9 @@ export const deleteLocation = async (dispatch, id) => {
     dispatch({ type: 'delete-location-fail', loading: false, error });
   }
 };
+
+export const setToken = () => {};
+
+export const loginUser = () => {};
+
+export const logoutUser = () => {};

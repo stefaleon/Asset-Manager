@@ -21,6 +21,7 @@ import ManageCategories from './components/ManageCategories';
 import CategoryForm from './components/CategoryForm';
 import ManageLocations from './components/ManageLocations';
 import LocationForm from './components/LocationForm';
+import LoginForm from './components/LoginForm';
 
 import {
   fetchAssets,
@@ -43,6 +44,9 @@ import {
   addLocation,
   updateLocation,
   deleteLocation,
+  setToken,
+  loginUser,
+  logoutUser,
 } from './methods/methods';
 
 const App = () => {
@@ -262,6 +266,14 @@ const App = () => {
                 dispatch={dispatch}
                 updateLocation={updateLocation}
               />
+            )}
+          />
+
+          <Route
+            path='/login'
+            exact
+            render={(props) => (
+              <LoginForm {...props} dispatch={dispatch} loginUser={loginUser} />
             )}
           />
 
