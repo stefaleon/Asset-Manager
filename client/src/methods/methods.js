@@ -1,4 +1,5 @@
 import axios from 'axios';
+import jwt from 'jsonwebtoken';
 
 const LIMIT = 10;
 
@@ -258,6 +259,30 @@ export const setToken = (token) => {
   }
 };
 
-export const loginUser = () => {};
+export const loginUser = async (dispatch, postData) => {
+  try {
+    dispatch({ type: 'login-user-request', loading: true });
+    const { data } = await axios.post('/api/users/login', postData);
+    console.log('in loginUser - data.token is:', data.token);
+    const tokenData = jwt.decode(data.token);
+    dispatch({
+      type: 'login-user-ok',
+      token: data.token,
+      loggedUserId: tokenData.id,
+      username: tokenData.name,
+      admin: tokenData.admin,
+      loading: false,
+    });
+    setToken(data.token);
+  } catch (error) {
+    console.log(error);
+    dispatch({
+      type: 'login-user-fail',
+      loading: false,
+      error: { message: 'Login failed' },
+    });
+    setToken(null);
+  }
+};
 
 export const logoutUser = () => {};
