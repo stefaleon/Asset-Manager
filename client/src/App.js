@@ -1,6 +1,7 @@
 import { useReducer, useEffect } from 'react';
 import { Container, Tabs, Tab, Jumbotron } from 'react-bootstrap';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import jwt from 'jsonwebtoken';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
@@ -64,7 +65,10 @@ const App = () => {
     filteredCategories: [],
     locationSearchTerm: '',
     filteredLocations: [],
-    token: null,
+    token: localStorage.getItem('token'),
+    loggedUserId: jwt.decode(localStorage.getItem('token'))?.id,
+    username: jwt.decode(localStorage.getItem('token'))?.name,
+    admin: jwt.decode(localStorage.getItem('token'))?.admin,
   });
 
   setToken(state.token); // set headers again after page reloads
@@ -90,7 +94,13 @@ const App = () => {
   return (
     <BrowserRouter>
       <Container>
-        <NavigationBar />
+        <NavigationBar
+          token={state.token}
+          username={state.username}
+          admin={state.admin}
+          dispatch={dispatch}
+          logoutUser={logoutUser}
+        />
         <Switch>
           <Route path='/about' component={About} />
 

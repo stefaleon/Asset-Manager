@@ -279,6 +279,10 @@ export const loginUser = async (dispatch, postData) => {
     dispatch({
       type: 'login-user-fail',
       loading: false,
+      token: null,
+      loggedUserId: null,
+      username: null,
+      admin: null,
       error: { message: 'Login failed' },
     });
     setToken(null);
