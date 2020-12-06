@@ -23,6 +23,7 @@ import CategoryForm from './components/CategoryForm';
 import ManageLocations from './components/ManageLocations';
 import LocationForm from './components/LocationForm';
 import LoginForm from './components/LoginForm';
+import UserData from './components/UserData';
 
 import {
   fetchAssets,
@@ -48,6 +49,7 @@ import {
   setToken,
   loginUser,
   logoutUser,
+  changeUserPassword,
 } from './methods/methods';
 
 const App = () => {
@@ -326,6 +328,25 @@ const App = () => {
             render={(props) => (
               <LoginForm {...props} dispatch={dispatch} loginUser={loginUser} />
             )}
+          />
+
+          <Route
+            path='/userdata'
+            exact
+            render={(props) =>
+              state.token ? (
+                <UserData
+                  {...props}
+                  error={state.error}
+                  username={state.username}
+                  loggedUserId={state.loggedUserId}
+                  dispatch={dispatch}
+                  changeUserPassword={changeUserPassword}
+                />
+              ) : (
+                <Alert variant='danger'>401 Not Authorized</Alert>
+              )
+            }
           />
 
           <Route path='/*' component={NotFound} />

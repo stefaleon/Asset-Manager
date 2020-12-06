@@ -307,3 +307,5 @@ export const logoutUser = async (dispatch) => {
     setToken(null);
   }
 };
+
+export const changeUserPassword = () => {};
