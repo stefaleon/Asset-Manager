@@ -1,5 +1,5 @@
 import { useReducer, useEffect } from 'react';
-import { Container, Tabs, Tab, Jumbotron } from 'react-bootstrap';
+import { Container, Tabs, Tab, Jumbotron, Alert } from 'react-bootstrap';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import jwt from 'jsonwebtoken';
 
@@ -148,138 +148,176 @@ const App = () => {
           </Route>
 
           <Route path='/assets'>
-            <ManageAssets
-              assets={state.filteredAssets}
-              loading={state.loading}
-              error={state.error}
-              dispatch={dispatch}
-              refreshAfterError={refreshAfterError}
-              searchTerm={state.searchTerm}
-              changeSearchTerm={changeSearchTerm}
-              deleteAsset={deleteAsset}
-            />
-            <Jumbotron>
-              <PaginationButtons
-                numberOfPages={state.numberOfPages}
-                page={state.page}
-                setPage={setPage}
-                dispatch={dispatch}
-              />
-            </Jumbotron>
+            {state.token ? (
+              <>
+                <ManageAssets
+                  assets={state.filteredAssets}
+                  loading={state.loading}
+                  error={state.error}
+                  dispatch={dispatch}
+                  refreshAfterError={refreshAfterError}
+                  searchTerm={state.searchTerm}
+                  changeSearchTerm={changeSearchTerm}
+                  deleteAsset={deleteAsset}
+                />
+                <Jumbotron>
+                  <PaginationButtons
+                    numberOfPages={state.numberOfPages}
+                    page={state.page}
+                    setPage={setPage}
+                    dispatch={dispatch}
+                  />
+                </Jumbotron>
+              </>
+            ) : (
+              <Alert variant='danger'>401 Not Authorized</Alert>
+            )}
           </Route>
 
           <Route
             path='/asset'
             exact
-            render={(props) => (
-              <AssetForm
-                {...props}
-                create={true}
-                categories={state.categories}
-                locations={state.locations}
-                dispatch={dispatch}
-                addAsset={addAsset}
-              />
-            )}
+            render={(props) =>
+              state.token ? (
+                <AssetForm
+                  {...props}
+                  create={true}
+                  categories={state.categories}
+                  locations={state.locations}
+                  dispatch={dispatch}
+                  addAsset={addAsset}
+                />
+              ) : (
+                <Alert variant='danger'>401 Not Authorized</Alert>
+              )
+            }
           />
 
           <Route
             path='/asset/:id'
-            render={(props) => (
-              <AssetForm
-                {...props}
-                create={false}
-                assetToUpdate={state.assets.find(
-                  (x) => x._id === props.match.params.id
-                )}
-                categories={state.categories}
-                locations={state.locations}
-                dispatch={dispatch}
-                updateAsset={updateAsset}
-              />
-            )}
+            render={(props) =>
+              state.token ? (
+                <AssetForm
+                  {...props}
+                  create={false}
+                  assetToUpdate={state.assets.find(
+                    (x) => x._id === props.match.params.id
+                  )}
+                  categories={state.categories}
+                  locations={state.locations}
+                  dispatch={dispatch}
+                  updateAsset={updateAsset}
+                />
+              ) : (
+                <Alert variant='danger'>401 Not Authorized</Alert>
+              )
+            }
           />
 
           <Route path='/categories'>
-            <ManageCategories
-              categories={state.filteredCategories}
-              loading={state.loading}
-              error={state.error}
-              dispatch={dispatch}
-              refreshAfterError={refreshAfterError}
-              searchTerm={state.categorySearchTerm}
-              changeSearchTerm={changeCategorySearchTerm}
-              deleteCategory={deleteCategory}
-            />
+            {state.token ? (
+              <ManageCategories
+                categories={state.filteredCategories}
+                loading={state.loading}
+                error={state.error}
+                dispatch={dispatch}
+                refreshAfterError={refreshAfterError}
+                searchTerm={state.categorySearchTerm}
+                changeSearchTerm={changeCategorySearchTerm}
+                deleteCategory={deleteCategory}
+              />
+            ) : (
+              <Alert variant='danger'>401 Not Authorized</Alert>
+            )}
           </Route>
 
           <Route
             path='/category'
             exact
-            render={(props) => (
-              <CategoryForm
-                {...props}
-                create={true}
-                dispatch={dispatch}
-                addCategory={addCategory}
-              />
-            )}
+            render={(props) =>
+              state.token ? (
+                <CategoryForm
+                  {...props}
+                  create={true}
+                  dispatch={dispatch}
+                  addCategory={addCategory}
+                />
+              ) : (
+                <Alert variant='danger'>401 Not Authorized</Alert>
+              )
+            }
           />
 
           <Route
             path='/category/:id'
-            render={(props) => (
-              <CategoryForm
-                {...props}
-                create={false}
-                categoryToUpdate={state.categories.find(
-                  (x) => x._id === props.match.params.id
-                )}
-                dispatch={dispatch}
-                updateCategory={updateCategory}
-              />
-            )}
+            render={(props) =>
+              state.token ? (
+                <CategoryForm
+                  {...props}
+                  create={false}
+                  categoryToUpdate={state.categories.find(
+                    (x) => x._id === props.match.params.id
+                  )}
+                  dispatch={dispatch}
+                  updateCategory={updateCategory}
+                />
+              ) : (
+                <Alert variant='danger'>401 Not Authorized</Alert>
+              )
+            }
           />
 
           <Route path='/locations'>
-            <ManageLocations
-              locations={state.filteredLocations}
-              loading={state.loading}
-              error={state.error}
-              dispatch={dispatch}
-              refreshAfterError={refreshAfterError}
-              searchTerm={state.locationSearchTerm}
-              changeSearchTerm={changeLocationSearchTerm}
-              deleteLocation={deleteLocation}
-            />
+            {state.token ? (
+              <ManageLocations
+                locations={state.filteredLocations}
+                loading={state.loading}
+                error={state.error}
+                dispatch={dispatch}
+                refreshAfterError={refreshAfterError}
+                searchTerm={state.locationSearchTerm}
+                changeSearchTerm={changeLocationSearchTerm}
+                deleteLocation={deleteLocation}
+              />
+            ) : (
+              <Alert variant='danger'>401 Not Authorized</Alert>
+            )}
           </Route>
 
           <Route
             path='/location'
             exact
-            render={(props) => (
-              <LocationForm
-                {...props}
-                create={true}
-                dispatch={dispatch}
-                addLocation={addLocation}
-              />
-            )}
+            render={(props) =>
+              state.token ? (
+                <LocationForm
+                  {...props}
+                  create={true}
+                  dispatch={dispatch}
+                  addLocation={addLocation}
+                />
+              ) : (
+                <Alert variant='danger'>401 Not Authorized</Alert>
+              )
+            }
           />
 
           <Route
             path='/location/:id'
-            render={(props) => (
-              <LocationForm
-                {...props}
-                create={false}
-                locationToUpdate={state.locations.find(
-                  (x) => x._id === props.match.params.id
-                )}
-                dispatch={dispatch}
-                updateLocation={updateLocation}
-              />
-            )}
+            render={(props) =>
+              state.token ? (
+                <LocationForm
+                  {...props}
+                  create={false}
+                  locationToUpdate={state.locations.find(
+                    (x) => x._id === props.match.params.id
+                  )}
+                  dispatch={dispatch}
+                  updateLocation={updateLocation}
+                />
+              ) : (
+                <Alert variant='danger'>401 Not Authorized</Alert>
+              )
+            }
           />
 
           <Route
