@@ -36,6 +36,13 @@ const UserData = ({
     }
   };
 
+  const onToggleView = () => {
+    const elements = document.getElementsByClassName('pass');
+    [...elements].forEach((x) => {
+      x.type = x.type === 'password' ? 'text' : 'password';
+    });
+  };
+
   return (
     <>
       <div id='editing'>
@@ -56,6 +63,7 @@ const UserData = ({
               value={passwords.password}
               placeholder='Password'
               onChange={onChange}
+              className='pass'
             />
           </Form.Group>
           <Form.Group>
@@ -65,7 +73,16 @@ const UserData = ({
               value={passwords.confirm}
               placeholder='Confirm Password'
               onChange={onChange}
+              className='pass'
             />
+          </Form.Group>
+          <Form.Group>
+            <Form.Check
+              type='checkbox'
+              onChange={onToggleView}
+              style={{ display: 'inline-block' }}
+            />{' '}
+            View Passwords
           </Form.Group>
           <Form.Group>
             <Button as='input' type='submit' value='Submit' />
