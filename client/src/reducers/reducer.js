@@ -37,6 +37,7 @@ const reducer = (state, action) => {
     case 'delete-location-request':
     case 'login-user-request':
     case 'logout-user-request':
+    case 'change-user-password-request':
       return { ...state, loading: action.loading };
     case 'fetch-assets-ok':
       return {
@@ -165,6 +166,9 @@ const reducer = (state, action) => {
         username: action.username,
         admin: action.admin,
       };
+    case 'change-user-password-ok':
+      return { ...state, loading: action.loading };
+
     case 'fetch-assets-fail':
     case 'fetch-filtered-assets-fail':
     case 'fetch-categories-fail':
@@ -181,6 +185,7 @@ const reducer = (state, action) => {
     case 'update-location-fail':
     case 'delete-location-fail':
     case 'logout-user-fail':
+    case 'change-user-password-fail':
       return { ...state, loading: action.loading, error: action.error };
     case 'login-user-fail':
       return {

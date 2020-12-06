@@ -308,4 +308,20 @@ export const logoutUser = async (dispatch) => {
   }
 };
 
-export const changeUserPassword = () => {};
+export const changeUserPassword = async (dispatch, userId, newPassword) => {
+  try {
+    dispatch({ type: 'change-user-password-request', loading: true });
+    const { data } = await axios.patch(
+      `/api/users/changeownpassword/${userId}`,
+      { password: newPassword }
+    );
+    console.log('in changeUserPassword - data.msg is:', data.msg);
+    dispatch({
+      type: 'change-user-password-ok',
+      loading: false,
+    });
+  } catch (error) {
+    console.log(error);
+    dispatch({ type: 'change-user-password-fail', loading: false, error });
+  }
+};
