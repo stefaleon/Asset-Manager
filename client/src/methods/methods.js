@@ -289,4 +289,21 @@ export const loginUser = async (dispatch, postData) => {
   }
 };
 
-export const logoutUser = () => {};
+export const logoutUser = async (dispatch) => {
+  try {
+    dispatch({ type: 'logout-user-request', loading: true });
+    dispatch({
+      type: 'logout-user-ok',
+      token: null,
+      loggedUserId: null,
+      username: null,
+      admin: null,
+      loading: false,
+    });
+    setToken(null);
+  } catch (error) {
+    console.log(error);
+    dispatch({ type: 'logout-user-fail', loading: false, error });
+    setToken(null);
+  }
+};
