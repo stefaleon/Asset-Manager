@@ -127,6 +127,22 @@ export const fetchFilteredLocations = async (dispatch, term) => {
   }
 };
 
+export const fetchFilteredUsers = async (dispatch, term) => {
+  try {
+    dispatch({ type: 'fetch-filtered-users-request', loading: true });
+    const { data } = await axios.get(`/api/users?search=${term}`);
+    console.log('in fetchFilteredUsers - data.data is:', data.data);
+    dispatch({
+      type: 'fetch-filtered-users-ok',
+      filteredUsers: data.data,
+      loading: false,
+    });
+  } catch (error) {
+    console.log(error);
+    dispatch({ type: 'fetch-filtered-users-fail', loading: false, error });
+  }
+};
+
 export const refreshAfterError = (dispatch) => {
   dispatch({ type: 'refresh-after-error', error: null });
 };

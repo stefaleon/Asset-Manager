@@ -101,6 +101,12 @@ const App = () => {
     fetchFilteredLocations(dispatch, state.locationSearchTerm);
   }, [state.locationSearchTerm]);
 
+  useEffect(() => {
+    if (state.admin) {
+      fetchFilteredUsers(dispatch, state.userSearchTerm);
+    }
+  }, [state.userSearchTerm, state.admin]);
+
   return (
     <BrowserRouter>
       <Container>
