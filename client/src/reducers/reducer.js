@@ -40,6 +40,7 @@ const reducer = (state, action) => {
     case 'change-user-password-request':
     case 'fetch-filtered-users-request':
     case 'add-user-request':
+    case 'update-user-request':
       return { ...state, loading: action.loading };
     case 'fetch-assets-ok':
       return {
@@ -143,6 +144,14 @@ const reducer = (state, action) => {
         ),
         loading: action.loading,
       };
+    case 'update-user-ok':
+      return {
+        ...state,
+        filteredUsers: state.filteredUsers.map((x) =>
+          x._id === action.updatedUser._id ? action.updatedUser : x
+        ),
+        loading: action.loading,
+      };
     case 'delete-asset-ok':
       return {
         ...state,
@@ -202,6 +211,7 @@ const reducer = (state, action) => {
     case 'change-user-password-fail':
     case 'fetch-filtered-users-fail':
     case 'add-user-fail':
+    case 'update-user-fail':
       return { ...state, loading: action.loading, error: action.error };
     case 'login-user-fail':
       return {

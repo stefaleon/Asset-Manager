@@ -366,4 +366,25 @@ export const addUser = async (dispatch, postData) => {
   }
 };
 
+export const updateUser = async (dispatch, id, userData) => {
+  try {
+    dispatch({ type: 'update-user-request', loading: true });
+    const postData = {
+      name: userData.name,
+      admin: userData.admin,
+    };
+    const { data } = await axios.patch(`/api/users/${id}`, postData);
+    console.log('in updateUser - data.token is:', data.token);
+    const updatedUser = { ...userData, _id: jwt.decode(data.token).id };
+    dispatch({
+      type: 'update-user-ok',
+      updatedUser,
+      loading: false,
+    });
+  } catch (error) {
+    console.log(error);
+    dispatch({ type: 'update-user-fail', loading: false, error });
+  }
+};
+
 export const deleteUser = () => {};

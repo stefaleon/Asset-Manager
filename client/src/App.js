@@ -398,6 +398,25 @@ const App = () => {
             }
           />
 
+          <Route
+            path='/user/:id'
+            render={(props) =>
+              state.admin ? (
+                <UserForm
+                  {...props}
+                  create={false}
+                  userToUpdate={state.filteredUsers.find(
+                    (x) => x._id === props.match.params.id
+                  )}
+                  dispatch={dispatch}
+                  updateUser={updateUser}
+                />
+              ) : (
+                <Alert variant='danger'>401 Not Authorized</Alert>
+              )
+            }
+          />
+
           <Route path='/*' component={NotFound} />
         </Switch>
       </Container>
