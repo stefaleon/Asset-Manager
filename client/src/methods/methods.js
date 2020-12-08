@@ -22,6 +22,13 @@ export const changeLocationSearchTerm = (dispatch, term) => {
   });
 };
 
+export const changeUserSearchTerm = (dispatch, term) => {
+  dispatch({
+    type: 'change-user-search-term',
+    userSearchTerm: term,
+  });
+};
+
 export const fetchAssets = async (dispatch) => {
   try {
     dispatch({ type: 'fetch-assets-request', loading: true });
@@ -325,3 +332,5 @@ export const changeUserPassword = async (dispatch, userId, newPassword) => {
     dispatch({ type: 'change-user-password-fail', loading: false, error });
   }
 };
+
+export const deleteUser = () => {};

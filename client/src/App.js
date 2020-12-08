@@ -24,6 +24,7 @@ import ManageLocations from './components/ManageLocations';
 import LocationForm from './components/LocationForm';
 import LoginForm from './components/LoginForm';
 import UserData from './components/UserData';
+import ManageUsers from './components/ManageUsers';
 
 import {
   fetchAssets,
@@ -50,6 +51,11 @@ import {
   loginUser,
   logoutUser,
   changeUserPassword,
+  fetchFilteredUsers,
+  changeUserSearchTerm,
+  addUser,
+  updateUser,
+  deleteUser,
 } from './methods/methods';
 
 const App = () => {
@@ -71,6 +77,8 @@ const App = () => {
     loggedUserId: jwt.decode(localStorage.getItem('token'))?.id,
     username: jwt.decode(localStorage.getItem('token'))?.name,
     admin: jwt.decode(localStorage.getItem('token'))?.admin,
+    filteredUsers: [],
+    userSearchTerm: '',
   });
 
   setToken(state.token); // set headers again after page reloads
@@ -348,6 +356,23 @@ const App = () => {
               )
             }
           />
+
+          <Route path='/users'>
+            {state.admin ? (
+              <ManageUsers
+                users={state.filteredUsers}
+                loading={state.loading}
+                error={state.error}
+                dispatch={dispatch}
+                refreshAfterError={refreshAfterError}
+                searchTerm={state.userSearchTerm}
+                changeSearchTerm={changeUserSearchTerm}
+                deleteUser={deleteUser}
+              />
+            ) : (
+              <Alert variant='danger'>401 Not Authorized</Alert>
+            )}
+          </Route>
 
           <Route path='/*' component={NotFound} />
         </Switch>
