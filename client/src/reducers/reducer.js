@@ -39,6 +39,7 @@ const reducer = (state, action) => {
     case 'logout-user-request':
     case 'change-user-password-request':
     case 'fetch-filtered-users-request':
+    case 'add-user-request':
       return { ...state, loading: action.loading };
     case 'fetch-assets-ok':
       return {
@@ -101,6 +102,12 @@ const reducer = (state, action) => {
         ...state,
         locations: [action.newLocation, ...state.locations],
         filteredLocations: [action.newLocation, ...state.filteredLocations],
+        loading: action.loading,
+      };
+    case 'add-user-ok':
+      return {
+        ...state,
+        filteredUsers: [action.newUser, ...state.filteredUsers],
         loading: action.loading,
       };
     case 'update-asset-ok':
@@ -194,6 +201,7 @@ const reducer = (state, action) => {
     case 'logout-user-fail':
     case 'change-user-password-fail':
     case 'fetch-filtered-users-fail':
+    case 'add-user-fail':
       return { ...state, loading: action.loading, error: action.error };
     case 'login-user-fail':
       return {

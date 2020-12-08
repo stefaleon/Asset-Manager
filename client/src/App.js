@@ -25,6 +25,7 @@ import LocationForm from './components/LocationForm';
 import LoginForm from './components/LoginForm';
 import UserData from './components/UserData';
 import ManageUsers from './components/ManageUsers';
+import UserForm from './components/UserForm';
 
 import {
   fetchAssets,
@@ -379,6 +380,23 @@ const App = () => {
               <Alert variant='danger'>401 Not Authorized</Alert>
             )}
           </Route>
+
+          <Route
+            path='/user'
+            exact
+            render={(props) =>
+              state.admin ? (
+                <UserForm
+                  {...props}
+                  create={true}
+                  dispatch={dispatch}
+                  addUser={addUser}
+                />
+              ) : (
+                <Alert variant='danger'>401 Not Authorized</Alert>
+              )
+            }
+          />
 
           <Route path='/*' component={NotFound} />
         </Switch>

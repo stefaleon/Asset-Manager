@@ -349,4 +349,21 @@ export const changeUserPassword = async (dispatch, userId, newPassword) => {
   }
 };
 
+export const addUser = async (dispatch, postData) => {
+  try {
+    dispatch({ type: 'add-user-request', loading: true });
+    const { data } = await axios.post('/api/users', postData);
+    console.log('in addUser - data.token is:', data.token);
+    const newUser = { ...postData, _id: jwt.decode(data.token).id };
+    dispatch({
+      type: 'add-user-ok',
+      newUser,
+      loading: false,
+    });
+  } catch (error) {
+    console.log(error);
+    dispatch({ type: 'add-user-fail', loading: false, error });
+  }
+};
+
 export const deleteUser = () => {};
