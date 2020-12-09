@@ -41,6 +41,7 @@ const reducer = (state, action) => {
     case 'fetch-filtered-users-request':
     case 'add-user-request':
     case 'update-user-request':
+    case 'delete-user-request':
       return { ...state, loading: action.loading };
     case 'fetch-assets-ok':
       return {
@@ -179,6 +180,14 @@ const reducer = (state, action) => {
         ),
         loading: action.loading,
       };
+    case 'delete-user-ok':
+      return {
+        ...state,
+        filteredUsers: state.filteredUsers.filter(
+          (x) => x._id !== action.deletedId
+        ),
+        loading: action.loading,
+      };
     case 'login-user-ok':
     case 'logout-user-ok':
       return {
@@ -212,6 +221,7 @@ const reducer = (state, action) => {
     case 'fetch-filtered-users-fail':
     case 'add-user-fail':
     case 'update-user-fail':
+    case 'delete-user-fail':
       return { ...state, loading: action.loading, error: action.error };
     case 'login-user-fail':
       return {
