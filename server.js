@@ -12,6 +12,7 @@ const usersRoutes = require('./routes/users');
 const app = express();
 
 app.use(express.json());
+app.use(express.static('./client/build'));
 
 app.get('/', (req, res) => {
   res.send('This is the Asset Manager API');
