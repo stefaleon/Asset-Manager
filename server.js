@@ -1,3 +1,4 @@
+const path = require('path');
 const express = require('express');
 
 const connect = require('./connect');
@@ -28,6 +29,10 @@ app.use((err, req, res, next) => {
   res
     .status(500)
     .json({ error: 'Server Error', code: err.code, message: err.message });
+});
+
+app.get('/*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, 'client/build/index.html'));
 });
 
 const listen = async () => {
