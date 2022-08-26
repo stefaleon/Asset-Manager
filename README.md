@@ -1,5 +1,10 @@
 # Asset Management App
 
+## Full stack app with MERN
+- Node Express back-end
+- React front-end
+
+
 ## Environment variables
 
 - Environment variables are read from a .env file in the root folder with the following content:
